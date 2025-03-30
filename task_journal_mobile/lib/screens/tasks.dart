@@ -10,6 +10,10 @@ class TasksPage extends StatefulWidget {
 class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return const Scaffold(
+      body: Center(
+        child: Text('Tasks Page'),
+      ),
+    );
   }
 }
