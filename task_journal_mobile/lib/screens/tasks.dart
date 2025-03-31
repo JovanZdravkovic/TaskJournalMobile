@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_journal_mobile/widgets/drawer.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({ super.key });
@@ -10,9 +11,13 @@ class TasksPage extends StatefulWidget {
 class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Tasks Page'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Task Journal'),
+      ),
+      drawer: const NavigationDrawerWidget(),
+      body: const Center(
+        child: Text('Tasks page'),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_journal_mobile/widgets/drawer.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({ super.key });
@@ -10,6 +11,14 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Task Journal'),
+      ),
+      drawer: const NavigationDrawerWidget(),
+      body: const Center(
+        child: Text('Profile page'),
+      ),
+    );
   }
 }

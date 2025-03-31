@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 class TaskHistory {
   final Uuid id;
   final int? execRating;
-  final String execComment;
+  final String? execComment;
   final Uuid taskId;
   final String taskName;
   final String taskIcon;
