@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_journal_mobile/screens/login.dart';
 import 'package:task_journal_mobile/screens/profile.dart';
 import 'package:task_journal_mobile/screens/tasks.dart';
 import 'package:task_journal_mobile/screens/tasks_history.dart';
@@ -21,6 +22,7 @@ class TaskJournalApp extends StatelessWidget {
         '/tasks': (context) => const TasksPage(),
         '/tasks_history': (context) => const TasksHistoryPage(),
         '/profile': (context) => const ProfilePage(),
+        '/login': (context) => const LoginPage(),
       },
       theme: appTheme,
     );

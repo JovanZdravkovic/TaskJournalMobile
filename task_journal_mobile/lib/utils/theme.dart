@@ -36,5 +36,5 @@ var appTheme = ThemeData(
   cardTheme: cardTheme,
   elevatedButtonTheme: elevatedButtonTheme,
   switchTheme: switchTheme,
-  colorScheme: ColorScheme.fromSeed(seedColor: primary),
+  colorScheme: ColorScheme.fromSeed(seedColor: white),
 );
