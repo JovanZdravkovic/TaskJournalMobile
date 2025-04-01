@@ -7,6 +7,7 @@ import 'package:task_journal_mobile/screens/tasks.dart';
 import 'package:task_journal_mobile/screens/tasks_history.dart';
 import 'package:task_journal_mobile/services/auth_service.dart';
 import 'package:task_journal_mobile/services/base_service.dart';
+import 'package:task_journal_mobile/utils/auth_guard.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 
 void main() {
@@ -35,10 +36,10 @@ class TaskJournalApp extends StatelessWidget {
       title: 'Task Journal',
       initialRoute: '/',
       routes: {
-        '/': (context) => const TasksPage(),
-        '/tasks': (context) => const TasksPage(),
-        '/tasks_history': (context) => const TasksHistoryPage(),
-        '/profile': (context) => const ProfilePage(),
+        '/': (context) => const AuthGuard(child: TasksPage()),
+        '/tasks': (context) => const AuthGuard(child: TasksPage()),
+        '/tasks_history': (context) => const AuthGuard(child: TasksHistoryPage()),
+        '/profile': (context) => const AuthGuard(child: ProfilePage()),
         '/login': (context) => const LoginPage(),
       },
       theme: appTheme,

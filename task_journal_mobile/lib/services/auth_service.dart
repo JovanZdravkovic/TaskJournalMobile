@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:task_journal_mobile/services/base_service.dart';
 
 class AuthService {
@@ -7,6 +7,14 @@ class AuthService {
 
   AuthService({ required this.baseService });
 
-  static Future<void> authenticate(BuildContext context) async {
+  Future<bool> authenticate() async {
+    try {
+      final response = await baseService.get('auth');
+      print(response.data);
+      return true;
+    } on DioException catch (e) {
+      print(e);
+      return false;
+    }
   }
 }
