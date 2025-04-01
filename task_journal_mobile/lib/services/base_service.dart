@@ -1,28 +1,65 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart' show Response;
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 
 class BaseService {
-  const BaseService();
+
+  final Dio dio;
+  late CookieJar cookieJar;
+
+  BaseService({ required this.dio }) {
+    init();
+  }
+
+  void init() {
+    cookieJar = PersistCookieJar();
+    dio.interceptors.add(CookieManager(cookieJar));
+  }
 
   Future<Response> get(String url) async {
-    final response = await http.get(Uri.parse(url));
+    final response = await dio.get(url);
     return response;
   }
 
-  Future<Response> create(String url, Map<String, dynamic> body) async {
+  Future<Response> post(String url, Map<String, dynamic> body) async {
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
-    final response = await http.post(
-      Uri.parse(url),
-      headers: headers,
-      body: jsonEncode(body),  
+    final response = await dio.post(
+      url,
+      data: body,
+      options: Options(
+        headers: headers
+      ),
     );
     return response;
   }
 
-  // Future<Response> update() {}
-  // Future<Response> delete() {}
+  Future<Response> put(String url, Map<String, dynamic> body) async {
+    final headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    final response = await dio.put(
+      url,
+      data: body,
+      options: Options(
+        headers: headers
+      ),
+    );
+    return response;
+  }
+  
+  Future<Response> delete(String url) async {
+    final headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    final response = await dio.delete(
+      url,
+      options: Options(
+        headers: headers
+      ),
+    );
+    return response;
+  }
 }
