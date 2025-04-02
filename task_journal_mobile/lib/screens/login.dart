@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_journal_mobile/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ super.key });
@@ -10,9 +12,20 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Login page'),
+        child: ElevatedButton(
+          onPressed: () async {
+            final result = await Provider.of<AuthService>(context, listen: false).login({ 'username': 'testuser', 'password': 'testpassword' });
+
+            if (!context.mounted) return;
+
+            if(result) {
+              Navigator.pushNamed(context, '/tasks');
+            }
+          },
+          child: const Text('login'),
+        ),
       ),
     );
   }

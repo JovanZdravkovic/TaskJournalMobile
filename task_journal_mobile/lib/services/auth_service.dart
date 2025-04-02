@@ -9,11 +9,18 @@ class AuthService {
 
   Future<bool> authenticate() async {
     try {
-      final response = await baseService.get('auth');
-      print(response.data);
+      await baseService.get('auth');
       return true;
     } on DioException catch (e) {
-      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> login(Map<String, dynamic> credentials) async {
+    try {
+      await baseService.post('login', credentials);
+      return true;
+    } on DioException catch (e) {
       return false;
     }
   }
