@@ -15,6 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _loginFormKey = GlobalKey<FormState>();
+  bool _invalidCredentialsError = false;
 
   @override
   void dispose() {
@@ -44,8 +45,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: kSpacingBoxSize,
-                  width: kSpacingBoxSize,
+                  height: kSmallSpacingBoxSize,
+                  width: kSmallSpacingBoxSize,
                 ),
                 SizedBox(
                   width: kMediumInputWidth,
@@ -60,8 +61,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: kSpacingBoxSize,
-                  width: kSpacingBoxSize,
+                  height: kSmallSpacingBoxSize,
+                  width: kSmallSpacingBoxSize,
+                ),
+                if(_invalidCredentialsError)
+                  const Text('Invalid credentials'), 
+                const SizedBox(
+                  height: kSmallSpacingBoxSize,
+                  width: kSmallSpacingBoxSize,
                 ),
                 SizedBox(
                   width: kMediumInputWidth,
@@ -79,6 +86,9 @@ class _LoginPageState extends State<LoginPage> {
 
                             if (!context.mounted) return;
 
+                            setState(() {
+                              _invalidCredentialsError = !result;
+                            });
                             if(result) {
                               Navigator.pushNamed(context, '/tasks');
                             }

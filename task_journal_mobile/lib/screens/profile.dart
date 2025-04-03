@@ -13,7 +13,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task Journal'),
+        title: const Text('Profile'),
       ),
       drawer: const NavigationDrawerWidget(),
       body: const Center(

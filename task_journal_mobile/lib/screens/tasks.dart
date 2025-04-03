@@ -13,7 +13,7 @@ class _TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task Journal'),
+        title: const Text('Tasks'),
       ),
       drawer: const NavigationDrawerWidget(),
       body: const Center(
