@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,21 +11,87 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _loginFormKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            final result = await Provider.of<AuthService>(context, listen: false).login({ 'username': 'testuser', 'password': 'testpassword' });
+      body: Padding(
+        padding: const EdgeInsets.all(kDrawerPadding),
+        child: Center(
+          child: Form(
+            key: _loginFormKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: kMediumInputWidth,
+                  child: TextFormField(
+                    controller: _usernameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Enter username',
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: kSpacingBoxSize,
+                  width: kSpacingBoxSize,
+                ),
+                SizedBox(
+                  width: kMediumInputWidth,
+                  child: TextFormField(
+                    controller: _passwordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Enter password',
+                    ),
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                  ),
+                ),
+                const SizedBox(
+                  height: kSpacingBoxSize,
+                  width: kSpacingBoxSize,
+                ),
+                SizedBox(
+                  width: kMediumInputWidth,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            final result = await Provider.of<AuthService>(context, listen: false).login(
+                              { 
+                                'username': _usernameController.text, 
+                                'password': _passwordController.text 
+                              }
+                            );
 
-            if (!context.mounted) return;
+                            if (!context.mounted) return;
 
-            if(result) {
-              Navigator.pushNamed(context, '/tasks');
-            }
-          },
-          child: const Text('login'),
+                            if(result) {
+                              Navigator.pushNamed(context, '/tasks');
+                            }
+                          },
+                          child: const Text('Submit'),
+                        ), 
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
