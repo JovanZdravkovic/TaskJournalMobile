@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(kDrawerPadding),
+        padding: const EdgeInsets.all(kStandardPadding),
         child: Center(
           child: Form(
             key: _loginFormKey,

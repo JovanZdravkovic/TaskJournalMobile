@@ -27,8 +27,12 @@ var dangerTextStyle = const TextStyle(
   color: danger,
 );
 
+var cardTextStyle = const TextStyle(
+  fontSize: kCardFontSize,
+);
+
 var cardTheme = const CardTheme(
-  color: primary,
+  color:  grayLight,
 );
 
 var elevatedButtonTheme = ElevatedButtonThemeData(

@@ -8,10 +8,10 @@ class NavigationDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: const EdgeInsets.all(kDrawerPadding),
+        padding: const EdgeInsets.all(kStandardPadding),
         children: [
           const Padding(
-            padding: EdgeInsets.all(kDrawerPadding),
+            padding: EdgeInsets.all(kStandardPadding),
             child: Text(
               'Task Journal',
               textAlign: TextAlign.center,
