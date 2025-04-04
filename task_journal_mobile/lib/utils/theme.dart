@@ -13,6 +13,10 @@ const grayDark = Color(0xffF5F5F5);
 const danger = Color(0xffF32013);
 const starYellow = Color(0xffFFEA00);
 
+var dangerTextStyle = const TextStyle(
+  color: danger,
+);
+
 var cardTheme = const CardTheme(
   color: primary,
 );

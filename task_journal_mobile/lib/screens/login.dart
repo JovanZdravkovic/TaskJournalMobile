@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/services/auth_service.dart';
+import 'package:task_journal_mobile/utils/theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ super.key });
@@ -34,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             key: _loginFormKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   width: kMediumInputWidth,
@@ -65,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: kSmallSpacingBoxSize,
                 ),
                 if(_invalidCredentialsError)
-                  const Text('Invalid credentials'), 
+                  Text('Invalid credentials', style: dangerTextStyle), 
                 const SizedBox(
                   height: kSmallSpacingBoxSize,
                   width: kSmallSpacingBoxSize,
