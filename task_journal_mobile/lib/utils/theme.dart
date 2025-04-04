@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_journal_mobile/constants.dart';
 
 const primary = Color(0xff23C686);
 const primaryLight = Color(0xff2DEDA4);
@@ -12,6 +13,15 @@ const grayLight = Color(0xffFAFAFA);
 const grayDark = Color(0xffF5F5F5);
 const danger = Color(0xffF32013);
 const starYellow = Color(0xffFFEA00);
+
+var appBarIconTheme = const IconThemeData(
+  color: white,
+);
+
+var appBarTextStyle = const TextStyle(
+  color: white,
+  fontSize: kAppBarFontSize,
+);
 
 var dangerTextStyle = const TextStyle(
   color: danger,
@@ -36,7 +46,14 @@ var switchTheme = SwitchThemeData(
   overlayColor: WidgetStateProperty.all(primary),
 );
 
+var appBarTheme = AppBarTheme(
+  backgroundColor: primary,
+  titleTextStyle: appBarTextStyle,
+  iconTheme: appBarIconTheme,
+);
+
 var appTheme = ThemeData(
+  appBarTheme: appBarTheme,
   cardTheme: cardTheme,
   elevatedButtonTheme: elevatedButtonTheme,
   switchTheme: switchTheme,

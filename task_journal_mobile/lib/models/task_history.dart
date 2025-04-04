@@ -3,10 +3,10 @@ import 'dart:core';
 import 'package:uuid/uuid.dart';
 
 class TaskHistory {
-  final Uuid id;
+  final String id;
   final int? execRating;
   final String? execComment;
-  final Uuid taskId;
+  final String taskId;
   final String taskName;
   final String taskIcon;
 
@@ -20,24 +20,17 @@ class TaskHistory {
   });
 
   factory TaskHistory.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'id': Uuid id,
-        'execRating': int? execRating,
-        'execComment': String execComment,
-        'taskId': Uuid taskId,
-        'taskName': String taskName,
-        'taskIcon': String taskIcon,
-      } =>
-        TaskHistory(
-          id: id,
-          execRating: execRating,
-          execComment: execComment,
-          taskId: taskId,
-          taskName: taskName,
-          taskIcon: taskIcon,
-        ),
-      _ => throw const FormatException('Failed to parse task history json.'),
-    };
+    try {
+      return TaskHistory(
+        id: json['id'],
+        execRating: json['execRating'],
+        execComment: json['execComment'],
+        taskId: json['taskId'],
+        taskName: json['taskName'],
+        taskIcon: json['taskIcon'],
+      );
+    } catch (e) {
+      throw FormatException('Failed to parse task history json: $e');
+    }
   }
 }

@@ -7,3 +7,5 @@ const kLargeInputWidth = 300.0;
 
 const kSmallSpacingBoxSize = 15.0;
 const kSpacingBoxSize = 30.0;
+
+const kAppBarFontSize = 20.0;

@@ -3,7 +3,7 @@ import 'dart:core';
 import 'package:uuid/uuid.dart';
 
 class Task {
-  final Uuid id;
+  final String id;
   final String taskName;
   final String taskIcon;
   final String taskDesc;
@@ -11,7 +11,7 @@ class Task {
   final bool starred;
   final String execStatus;
   final DateTime createdAt;
-  final Uuid createdBy;
+  final String createdBy;
 
   Task({ 
     required this.id ,
@@ -26,30 +26,20 @@ class Task {
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'id': Uuid id,
-        'taskName': String taskName,
-        'taskIcon': String taskIcon,
-        'taskDesc': String taskDesc,
-        'deadline': DateTime? deadline,
-        'starred': bool starred,
-        'execStatus': String execStatus,
-        'createdAt': DateTime createdAt,
-        'createdBy': Uuid createdBy
-      } =>
-        Task(
-          id: id,
-          taskName: taskName,
-          taskIcon: taskIcon,
-          taskDesc: taskDesc,
-          deadline: deadline,
-          starred: starred,
-          execStatus: execStatus,
-          createdAt: createdAt,
-          createdBy: createdBy
-        ),
-      _ => throw const FormatException('Failed to parse task json.'),
-    };
+    try {
+      return Task(
+        id: json['id'],
+        taskName: json['taskName'],
+        taskIcon: json['taskIcon'],
+        taskDesc: json['taskDesc'],
+        deadline: json['deadline'] != null ? DateTime.parse(json['deadline']) : null,
+        starred: json['starred'],
+        execStatus: json['execStatus'],
+        createdAt: DateTime.parse(json['createdAt']),
+        createdBy: json['createdBy'],
+      );
+    } catch (e) {
+      throw FormatException('Failed to parse task json: $e');
+    }
   }
 }

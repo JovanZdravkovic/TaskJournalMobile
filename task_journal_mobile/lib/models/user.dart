@@ -12,18 +12,14 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'username': String username,
-        'email': String email,
-        'createdAt': DateTime createdAt,
-      } =>
-        User(
-          username: username,
-          email: email,
-          createdAt: createdAt,
-        ),
-      _ => throw const FormatException('Failed to parse user json.'),
-    };
+    try {
+      return User(
+        username: json['username'],
+        email: json['email'],
+        createdAt: DateTime.parse(json['createdAt']),
+      );
+    } catch (e) {
+      throw FormatException('Failed to parse user json: $e');
+    }
   }
 }
