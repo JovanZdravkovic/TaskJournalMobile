@@ -7,6 +7,7 @@ const primaryDark = Color(0xff1CA670);
 const secondary = Color(0xffFC9D45);
 const secondaryDark = Color(0xffF28B2C);
 const white = Colors.white;
+const black = Colors.black;
 const dark = Color(0xff1D3853);
 const darkLight = Color(0xff7A9295);
 const grayLight = Color(0xffFAFAFA);

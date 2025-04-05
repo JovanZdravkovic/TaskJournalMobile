@@ -12,3 +12,6 @@ const kStandardPadding = 15.0;
 const kAppBarFontSize = 20.0;
 
 const kCardFontSize = 15.0;
+
+const kSmallIconSize = 20.0;
+const kLargeIconSize = 30.0;
