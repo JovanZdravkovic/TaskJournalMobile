@@ -32,6 +32,8 @@ class TaskRow extends StatelessWidget {
                 style: cardTextStyle,
               ), 
             ),
+            if (task.starred)
+              const FaIcon(FontAwesomeIcons.solidStar, color: starYellow),
             const SizedBox(
               width: kSmallSpacingBoxSize,
             ),
