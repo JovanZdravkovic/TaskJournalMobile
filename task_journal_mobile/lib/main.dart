@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/screens/login.dart';
+import 'package:task_journal_mobile/screens/new_task.dart';
 import 'package:task_journal_mobile/screens/profile.dart';
 import 'package:task_journal_mobile/screens/tasks.dart';
 import 'package:task_journal_mobile/screens/tasks_history.dart';
@@ -44,6 +45,7 @@ class TaskJournalApp extends StatelessWidget {
         '/tasks': (context) => const AuthGuard(child: TasksPage()),
         '/tasks_history': (context) => const AuthGuard(child: TasksHistoryPage()),
         '/profile': (context) => const AuthGuard(child: ProfilePage()),
+        '/new_task': (context) => const AuthGuard(child: NewTaskPage()),
         '/login': (context) => const LoginPage(),
       },
       theme: appTheme,

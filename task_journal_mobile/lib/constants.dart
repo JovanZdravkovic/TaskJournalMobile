@@ -17,3 +17,5 @@ const kSmallIconSize = 20.0;
 const kLargeIconSize = 30.0;
 const kSmallIconButtonSize = 40.0;
 const kLargeIconButtonSize = 50.0;
+
+const kFloatingActionButtonSize = 72.0;

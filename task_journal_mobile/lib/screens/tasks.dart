@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
 import 'package:task_journal_mobile/services/tasks_service.dart';
+import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/drawer.dart';
 import 'package:task_journal_mobile/widgets/task_row.dart';
 
@@ -49,7 +51,21 @@ class _TasksPageState extends State<TasksPage> {
             }
           ),
         ),
-      )
+      ),
+      floatingActionButton: SizedBox(
+        height: kFloatingActionButtonSize,
+        width: kFloatingActionButtonSize,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/new_task');
+            },
+            shape: const CircleBorder(),
+            backgroundColor: secondary,
+            child: const FaIcon(FontAwesomeIcons.plus, color: white, size: kLargeIconSize,),
+          ),
+        ),
+      ),
     );
   }
 }

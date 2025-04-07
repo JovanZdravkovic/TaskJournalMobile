@@ -10,6 +10,13 @@ class NewTaskPage extends StatefulWidget {
 class _NewTaskPageState extends State<NewTaskPage> {
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('New task'),
+      ),
+      body: const Center(
+        child: Text('New task page'),
+      ),
+    );
   }
 }
