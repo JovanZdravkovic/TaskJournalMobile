@@ -24,12 +24,16 @@ class TaskRow extends StatelessWidget {
             const SizedBox(
               width: kSmallSpacingBoxSize,
             ),
-            Text(
-              task.taskName, 
-              style: cardTextStyle,
+            Expanded(
+              child: Text(
+                task.taskName,
+                overflow: TextOverflow.ellipsis,
+                softWrap: false,
+                style: cardTextStyle,
+              ), 
             ),
-            const Expanded(
-              child: SizedBox(),
+            const SizedBox(
+              width: kSmallSpacingBoxSize,
             ),
             Ink(
               height: kSmallIconButtonSize,
