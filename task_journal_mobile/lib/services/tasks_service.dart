@@ -18,9 +18,20 @@ class TasksService {
   Future<List<Task>> getTasks() async {
     try {
       final response = await baseService.get('tasks');
-      return parseTasksJson(response.data);
-    } on DioException catch (e) {
+      final success = parseTasksJson(response.data);
+      return success;
+    } catch (_) {
       return [];
+    }
+  }
+
+  Future<bool> completeTask(String taskId) async {
+    try {
+      final response = await baseService.put('task/$taskId');
+      final success = response.data['success'];
+      return success;
+    } catch (_) {
+      return false;
     }
   }
 }

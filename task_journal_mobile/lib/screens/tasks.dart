@@ -17,12 +17,25 @@ class TasksPage extends StatefulWidget {
 
 class _TasksPageState extends State<TasksPage> {
 
-  late Future<List<Task>> tasks;
+  List<Task> tasks = [];
 
   @override
   void initState() {
     super.initState();
-    tasks = Provider.of<TasksService>(context, listen: false).getTasks();
+    loadTasks();
+  }
+
+  Future<void> loadTasks() async {
+    final loadedTasks = await Provider.of<TasksService>(context, listen: false).getTasks();
+    setState(() {
+      tasks = loadedTasks;
+    });
+  }
+
+  void completeTask(String taskId) {
+    setState(() {
+      tasks.removeWhere((task) => task.id == taskId);
+    });
   }
 
   @override
@@ -35,21 +48,14 @@ class _TasksPageState extends State<TasksPage> {
       body: Padding(
         padding: const EdgeInsets.all(kStandardPadding),
         child: Center(
-          child: FutureBuilder(
-            future: tasks, 
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView(children: [
-                    for(var i = 0; i < snapshot.data!.length; i++) 
-                      TaskRow(task: snapshot.data![i]),
-                  ],
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              return const CircularProgressIndicator();
-            }
-          ),
+            child: switch (tasks.length) {
+              0 => const Text('No tasks.'), 
+              _ => ListView(children: [
+                      for(var i = 0; i < tasks.length; i++) 
+                        TaskRow(task: tasks[i], completeTaskCallback: completeTask,),
+                    ],
+                  ),
+            },
         ),
       ),
       floatingActionButton: SizedBox(

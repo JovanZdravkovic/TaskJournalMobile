@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
+import 'package:task_journal_mobile/services/tasks_service.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/task_icon.dart';
 
 class TaskRow extends StatelessWidget {
   
   final Task task;
+  final void Function(String taskId) completeTaskCallback;
 
-  const TaskRow({super.key, required this.task});
+  const TaskRow({super.key, required this.task, required this.completeTaskCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,18 @@ class TaskRow extends StatelessWidget {
               child: IconButton(
                 icon: const FaIcon(FontAwesomeIcons.check),
                 color: white,
-                onPressed: () {},
+                onPressed: () async {
+                  final result = await Provider.of<TasksService>(context, listen: false).completeTask(task.id);
+                  if(!context.mounted) {
+                    return ;
+                  }
+                  if(result) {
+                    completeTaskCallback(task.id);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Successfully completed task')));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error while completing task')));
+                  }
+                },
               ),
             ),
           ],

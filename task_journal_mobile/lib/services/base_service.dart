@@ -33,7 +33,7 @@ class BaseService {
     return response;
   }
 
-  Future<Response> post(String url, Map<String, dynamic> body) async {
+  Future<Response> post(String url, [Map<String, dynamic>? body]) async {
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -47,7 +47,7 @@ class BaseService {
     return response;
   }
 
-  Future<Response> put(String url, Map<String, dynamic> body) async {
+  Future<Response> put(String url, [Map<String, dynamic>? body]) async {
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
