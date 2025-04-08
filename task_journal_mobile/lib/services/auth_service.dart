@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:task_journal_mobile/services/base_service.dart';
 
 class AuthService {

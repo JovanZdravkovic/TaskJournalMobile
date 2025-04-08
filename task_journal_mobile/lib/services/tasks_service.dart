@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:task_journal_mobile/models/task.dart';
 import 'package:task_journal_mobile/services/base_service.dart';
 
