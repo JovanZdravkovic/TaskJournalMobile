@@ -11,7 +11,7 @@ class AuthService {
     try {
       await baseService.get('auth');
       return true;
-    } on DioException catch (e) {
+    } catch (_) {
       return false;
     }
   }
@@ -20,7 +20,7 @@ class AuthService {
     try {
       await baseService.post('login', credentials);
       return true;
-    } on DioException catch (e) {
+    } catch (_) {
       return false;
     }
   }
