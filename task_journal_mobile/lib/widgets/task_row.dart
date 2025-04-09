@@ -5,6 +5,7 @@ import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
 import 'package:task_journal_mobile/services/tasks_service.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
+import 'package:task_journal_mobile/widgets/snackbar.dart';
 import 'package:task_journal_mobile/widgets/task_icon.dart';
 
 class TaskRow extends StatelessWidget {
@@ -54,9 +55,9 @@ class TaskRow extends StatelessWidget {
                   }
                   if(result) {
                     completeTaskCallback(task.id);
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Successfully completed task')));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully completed task'));
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error while completing task')));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while completing task'));
                   }
                 },
               ),

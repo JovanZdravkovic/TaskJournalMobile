@@ -19,3 +19,5 @@ const kSmallIconButtonSize = 40.0;
 const kLargeIconButtonSize = 50.0;
 
 const kFloatingActionButtonSize = 72.0;
+
+const kSnackBarDuration = 4;
