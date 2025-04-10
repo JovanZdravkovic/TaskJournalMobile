@@ -84,6 +84,7 @@ class _IconSelectWidgetState extends State<IconSelectWidget> {
         widget.setIconCallback(icon);
       },
       menuHeight: kTaskIconSelectHeight,
+      enabled: true,
     );
   }
 }
