@@ -21,3 +21,8 @@ const kLargeIconButtonSize = 50.0;
 const kFloatingActionButtonSize = 72.0;
 
 const kSnackBarDuration = 4;
+
+const kTaskIconSelectHeight = 250.0;
+const kTaskIconSelectWidth = 250.0;
+
+const kInputBorderRadius = 15.0;

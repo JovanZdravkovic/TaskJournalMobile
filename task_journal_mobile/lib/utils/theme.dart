@@ -57,6 +57,19 @@ var appBarTheme = AppBarTheme(
   iconTheme: appBarIconTheme,
 );
 
+var dropdownTheme = DropdownMenuThemeData(
+  inputDecorationTheme: InputDecorationTheme(
+    constraints: const BoxConstraints(maxWidth: kTaskIconSelectWidth),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(kInputBorderRadius),
+      borderSide: const BorderSide(
+        color: grayDark,
+        width: 1.0,
+      ),
+    ),
+  ),
+);
+
 var appTheme = ThemeData(
   appBarTheme: appBarTheme,
   cardTheme: cardTheme,
@@ -64,4 +77,5 @@ var appTheme = ThemeData(
   switchTheme: switchTheme,
   colorScheme: ColorScheme.fromSeed(seedColor: white),
   useMaterial3: true,
+  dropdownMenuTheme: dropdownTheme,
 );
