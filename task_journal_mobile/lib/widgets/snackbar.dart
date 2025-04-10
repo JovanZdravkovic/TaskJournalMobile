@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 

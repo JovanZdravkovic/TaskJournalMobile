@@ -63,4 +63,5 @@ var appTheme = ThemeData(
   elevatedButtonTheme: elevatedButtonTheme,
   switchTheme: switchTheme,
   colorScheme: ColorScheme.fromSeed(seedColor: white),
+  useMaterial3: true,
 );
