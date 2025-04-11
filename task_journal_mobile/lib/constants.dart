@@ -8,6 +8,7 @@ const kSmallSpacingBoxSize = 15.0;
 const kSpacingBoxSize = 30.0;
 
 const kStandardPadding = 15.0;
+const kLargePadding = 30.0;
 
 const kAppBarFontSize = 20.0;
 

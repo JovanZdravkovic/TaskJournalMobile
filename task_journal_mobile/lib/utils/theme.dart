@@ -57,6 +57,51 @@ var appBarTheme = AppBarTheme(
   iconTheme: appBarIconTheme,
 );
 
+var textInputTheme = InputDecorationTheme(
+  enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(kInputBorderRadius),
+    borderSide: const BorderSide(
+      color: grayDark,
+      width: 2.0,
+    ),
+  ),
+  errorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(kInputBorderRadius),
+    borderSide: const BorderSide(
+      color: danger,
+      width: 2.0,
+    ),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(kInputBorderRadius),
+    borderSide: const BorderSide(
+      color: primary,
+      width: 2.0,
+    ),
+  ),
+  focusedErrorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(kInputBorderRadius),
+    borderSide: const BorderSide(
+      color: danger,
+      width: 2.0,
+    ),
+  ),
+  disabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(kInputBorderRadius),
+    borderSide: const BorderSide(
+      color: grayDark,
+      width: 2.0,
+    ),
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(kInputBorderRadius),
+    borderSide: const BorderSide(
+      color: grayDark,
+      width: 2.0,
+    ),
+  ),
+);
+
 var dropdownTheme = DropdownMenuThemeData(
   inputDecorationTheme: InputDecorationTheme(
     constraints: const BoxConstraints(maxWidth: kTaskIconSelectWidth),
@@ -113,5 +158,6 @@ var appTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(seedColor: white),
   useMaterial3: true,
   dropdownMenuTheme: dropdownTheme,
+  inputDecorationTheme: textInputTheme,
   scaffoldBackgroundColor: white,
 );
