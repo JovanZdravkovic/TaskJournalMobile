@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
+import 'package:task_journal_mobile/widgets/label_divider.dart';
 import 'package:task_journal_mobile/widgets/star_input.dart';
 import 'package:task_journal_mobile/widgets/task_icon_select.dart';
 
@@ -13,9 +15,10 @@ class NewTaskPage extends StatefulWidget {
 }
 
 class _NewTaskPageState extends State<NewTaskPage> {
+  final _newTaskFormKey = GlobalKey<FormState>();
   final _taskNameController = TextEditingController();
   final _taskDescController = TextEditingController();
-  final _newTaskFormKey = GlobalKey<FormState>();
+  DateTime? deadline;
   String? iconField;
   bool? starred;
 
@@ -61,16 +64,15 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 ],
               ),
               const SizedBox(
-                height: kSpacingBoxSize,
-                width: kSpacingBoxSize,
+                height: kSmallSpacingBoxSize,
+                width: kSmallSpacingBoxSize,
               ),
               IconSelectWidget(setIconCallback: setIcon),
               const SizedBox(
-                height: kSpacingBoxSize,
-                width: kSpacingBoxSize,
+                height: kSmallSpacingBoxSize,
+                width: kSmallSpacingBoxSize,
               ),
               SizedBox(
-                width: kMediumInputWidth,
                 child: TextFormField(
                   maxLines: 6,
                   controller: _taskDescController,
@@ -79,6 +81,39 @@ class _NewTaskPageState extends State<NewTaskPage> {
                     alignLabelWithHint: true,
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: kSmallSpacingBoxSize,
+                width: kSmallSpacingBoxSize,
+              ),
+              labelDivider('Optional'),
+              Row(
+                children: [
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.calendar_month, color: white,),
+                    onPressed: () {
+                      DatePicker.showDateTimePicker(
+                        context,
+                        showTitleActions: true,
+                        minTime: DateTime(2025, 1, 1),
+                        maxTime: DateTime(2050, 1, 1), 
+                        onChanged: (date) {}, 
+                        onConfirm: (date) {
+                          setState(() {
+                            deadline = date;
+                          });
+                        },
+                      );
+                    },
+                    label: const Text('Deadline'),
+                  ),
+                  const SizedBox(
+                    height: kSmallSpacingBoxSize,
+                    width: kSmallSpacingBoxSize,
+                  ),
+                  if(deadline != null)
+                    Text('$deadline'),
+                ],
               ),
             ],
           ),
