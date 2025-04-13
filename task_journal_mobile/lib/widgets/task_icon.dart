@@ -111,7 +111,7 @@ class TaskIcon extends StatelessWidget {
       radius: kSmallIconSize,
       child: switch (taskIcon) {
         'job' => const FaIcon(FontAwesomeIcons.suitcase, color: Color(0xFFC48000)),
-        'doctor_appointment' => const FaIcon(FontAwesomeIcons.suitcase, color: white),
+        'doctor_appointment' => const FaIcon(FontAwesomeIcons.userDoctor, color: white),
         'mechanic' => const FaIcon(FontAwesomeIcons.wrench, color: Color(0xFF878787)),
         'cleaning' => const FaIcon(FontAwesomeIcons.broom, color: Color(0xFFAD6A0A)),
         'gym' => const FaIcon(FontAwesomeIcons.dumbbell, color: black),

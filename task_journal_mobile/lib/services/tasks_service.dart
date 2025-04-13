@@ -31,4 +31,14 @@ class TasksService {
       return false;
     }
   }
+
+  Future<String> createTask(Map<String, dynamic> task) async {
+    try {
+      final response = await baseService.post('tasks', task);
+      final taskId = response.data['id'];
+      return taskId;
+    } catch (_) {
+      return '';
+    }
+  }
 }
