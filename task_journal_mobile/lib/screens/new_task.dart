@@ -25,6 +25,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
   final _taskDescController = TextEditingController();
   DateTime? deadline;
   String? iconField;
+  String? iconFieldError;
   bool? starred = false;
 
   void setStarred(bool? starredValue) {
@@ -74,6 +75,8 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 width: kSmallSpacingBoxSize,
               ),
               IconSelectWidget(setIconCallback: setIcon),
+              if(iconFieldError != null)
+                Text('$iconFieldError', style: dangerTextStyle,),
               const SizedBox(
                 height: kSmallSpacingBoxSize,
                 width: kSmallSpacingBoxSize,
@@ -151,6 +154,10 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while creating task'));
                 }
+              } else if(iconField == null) {
+                setState(() {
+                  iconFieldError = 'Task icon cannot be empty';
+                });
               }
             },
             shape: const CircleBorder(),
