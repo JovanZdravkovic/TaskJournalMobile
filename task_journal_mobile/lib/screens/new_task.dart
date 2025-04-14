@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/services/tasks_service.dart';
+import 'package:task_journal_mobile/utils/task_form_validators.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/label_divider.dart';
 import 'package:task_journal_mobile/widgets/snackbar.dart';
@@ -24,7 +25,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
   final _taskDescController = TextEditingController();
   DateTime? deadline;
   String? iconField;
-  bool? starred;
+  bool? starred = false;
 
   void setStarred(bool? starredValue) {
     starred = starredValue;
@@ -58,6 +59,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                       decoration: const InputDecoration(
                         labelText: 'Enter task name',
                       ),
+                      validator: (value) => TaskFormValidators.taskName(value),
                     ),
                   ),
                   const SizedBox(
@@ -78,12 +80,13 @@ class _NewTaskPageState extends State<NewTaskPage> {
               ),
               SizedBox(
                 child: TextFormField(
-                  maxLines: 6,
+                  maxLines: 5,
                   controller: _taskDescController,
                   decoration: const InputDecoration(
                     labelText: 'Enter task description',
                     alignLabelWithHint: true,
                   ),
+                  validator: (value) => TaskFormValidators.taskDesc(value),
                 ),
               ),
               const SizedBox(
@@ -129,23 +132,25 @@ class _NewTaskPageState extends State<NewTaskPage> {
         child: FittedBox(
           child: FloatingActionButton(
             onPressed: () async {
-              final result = await Provider.of<TasksService>(context, listen: false).createTask(
-                { 
-                  'taskName': _taskNameController.text,
-                  'taskIcon': iconField,
-                  'taskDesc': _taskDescController.text,
-                  'deadline': deadline!.toUtc().toIso8601String(),
-                  'starred': starred,
+              if(_newTaskFormKey.currentState!.validate() && iconField != null && starred != null) {
+                final result = await Provider.of<TasksService>(context, listen: false).createTask(
+                  { 
+                    'taskName': _taskNameController.text,
+                    'taskIcon': iconField,
+                    'taskDesc': _taskDescController.text,
+                    'deadline': deadline?.toUtc().toIso8601String(),
+                    'starred': starred,
+                  }
+                );
+
+                if (!context.mounted) return;
+
+                if(result != '') {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully created task'));
+                  Navigator.pushNamed(context, '/tasks');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while creating task'));
                 }
-              );
-
-              if (!context.mounted) return;
-
-              if(result != '') {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully created task'));
-                Navigator.pushNamed(context, '/tasks');
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while creating task'));
               }
             },
             shape: const CircleBorder(),
