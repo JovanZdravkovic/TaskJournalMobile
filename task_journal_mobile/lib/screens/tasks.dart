@@ -6,6 +6,9 @@ import 'package:task_journal_mobile/models/task.dart';
 import 'package:task_journal_mobile/services/tasks_service.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/drawer.dart';
+import 'package:task_journal_mobile/widgets/label_divider.dart';
+import 'package:task_journal_mobile/widgets/search_bar.dart';
+import 'package:task_journal_mobile/widgets/task_icon_select.dart';
 import 'package:task_journal_mobile/widgets/task_row.dart';
 
 class TasksPage extends StatefulWidget {
@@ -38,6 +41,8 @@ class _TasksPageState extends State<TasksPage> {
     });
   }
 
+  void setIcon(TaskIconEnum? icon) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,15 +52,59 @@ class _TasksPageState extends State<TasksPage> {
       drawer: const NavigationDrawerWidget(),
       body: Padding(
         padding: const EdgeInsets.all(kStandardPadding),
-        child: Center(
-            child: switch (tasks.length) {
-              0 => const Text('No tasks.'), 
-              _ => ListView(children: [
-                      for(var i = 0; i < tasks.length; i++) 
-                        TaskRow(task: tasks[i], completeTaskCallback: completeTask,),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              width: kMediumInputWidth,
+              child: SearchBarWidget(),
+            ),
+            const SizedBox(
+              height: kSmallSpacingBoxSize,
+              width: kSmallSpacingBoxSize,
+            ),
+            IconSelectWidget(setIconCallback: setIcon),
+            const SizedBox(
+              height: kSmallSpacingBoxSize,
+              width: kSmallSpacingBoxSize,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Row(
+                    children: [
+                      FaIcon(FontAwesomeIcons.calendarDays, color: white, size: kSmallIconSize,),
+                      Text(' Deadline '),
+                      FaIcon(FontAwesomeIcons.arrowUp, color: white, size: kSmallIconSize,),
                     ],
                   ),
-            },
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Row(
+                    children: [
+                      FaIcon(FontAwesomeIcons.solidStar, color: white, size: kSmallIconSize,),
+                      Text(' Starred '),
+                      FaIcon(FontAwesomeIcons.arrowUp, color: white, size: kSmallIconSize,),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            labelDivider('Tasks'),
+            Expanded(
+              child: switch (tasks.length) {
+                0 => const Text('No tasks.'), 
+                _ => ListView(children: [
+                        for(var i = 0; i < tasks.length; i++) 
+                          TaskRow(task: tasks[i], completeTaskCallback: completeTask,),
+                      ],
+                    ),
+              },
+            ),
+          ],
         ),
       ),
       floatingActionButton: SizedBox(
