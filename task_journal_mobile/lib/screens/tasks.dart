@@ -69,7 +69,7 @@ class _TasksPageState extends State<TasksPage> {
               width: kSmallSpacingBoxSize,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ElevatedButton(
                   onPressed: () {},
@@ -81,6 +81,10 @@ class _TasksPageState extends State<TasksPage> {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: kSmallSpacingBoxSize,
+                  width: kSmallSpacingBoxSize,
+                ),
                 ElevatedButton(
                   onPressed: () {},
                   child: const Row(
@@ -90,6 +94,14 @@ class _TasksPageState extends State<TasksPage> {
                       FaIcon(FontAwesomeIcons.arrowUp, color: white, size: kSmallIconSize,),
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: kSmallSpacingBoxSize,
+                  width: kSmallSpacingBoxSize,
+                ),
+                IconButton(
+                  onPressed: () {}, 
+                  icon: FaIcon(FontAwesomeIcons.arrowsRotate, color: Colors.grey.shade400,),
                 ),
               ],
             ),
