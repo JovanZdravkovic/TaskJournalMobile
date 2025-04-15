@@ -36,6 +36,11 @@ var cardTheme = const CardTheme(
   color:  grayLight,
 );
 
+var navigationDrawerTextStyle = const TextStyle(
+  color: white,
+  fontSize: kDrawerHeaderFontSize,
+);
+
 var elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
     foregroundColor: WidgetStateProperty.all(white),
@@ -150,6 +155,10 @@ var dropdownTheme = DropdownMenuThemeData(
   ),
 );
 
+var drawerTheme = const DrawerThemeData(
+  backgroundColor: white,
+);
+
 var appTheme = ThemeData(
   appBarTheme: appBarTheme,
   cardTheme: cardTheme,
@@ -160,4 +169,5 @@ var appTheme = ThemeData(
   dropdownMenuTheme: dropdownTheme,
   inputDecorationTheme: textInputTheme,
   scaffoldBackgroundColor: white,
+  drawerTheme: drawerTheme,
 );

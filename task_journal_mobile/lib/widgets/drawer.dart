@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_journal_mobile/constants.dart';
+import 'package:task_journal_mobile/utils/theme.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   const NavigationDrawerWidget({super.key});
@@ -8,14 +9,22 @@ class NavigationDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: const EdgeInsets.all(kStandardPadding),
+        padding: const EdgeInsets.all(0.0),
         children: [
-          const Padding(
-            padding: EdgeInsets.all(kStandardPadding),
-            child: Text(
-              'Task Journal',
-              textAlign: TextAlign.center,
+          Container(
+            color: primary,
+            child: Padding(
+              padding: const EdgeInsets.all(kLargePadding),
+              child: Text(
+                'Task Journal',
+                textAlign: TextAlign.center,
+                style: navigationDrawerTextStyle,
+              ),
             ),
+          ),
+          const SizedBox(
+            height: kSpacingBoxSize,
+            width: kSpacingBoxSize,
           ),
           ListTile(
             leading: const Icon(
