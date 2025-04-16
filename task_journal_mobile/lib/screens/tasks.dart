@@ -21,6 +21,8 @@ class TasksPage extends StatefulWidget {
 class _TasksPageState extends State<TasksPage> {
 
   List<Task> tasks = [];
+  String? searchOrderBy;
+  final _searchNameController = TextEditingController();
 
   @override
   void initState() {
@@ -28,8 +30,15 @@ class _TasksPageState extends State<TasksPage> {
     loadTasks();
   }
 
+  Map<String, dynamic> createPayload() {
+    return {
+      'searchName': _searchNameController.text,
+      'searchOrderBy': searchOrderBy,
+    };
+  }
+
   Future<void> loadTasks() async {
-    final loadedTasks = await Provider.of<TasksService>(context, listen: false).getTasks();
+    final loadedTasks = await Provider.of<TasksService>(context, listen: false).getTasks(createPayload());
     setState(() {
       tasks = loadedTasks;
     });
@@ -55,9 +64,9 @@ class _TasksPageState extends State<TasksPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
+            SizedBox(
               width: kMediumInputWidth,
-              child: SearchBarWidget(),
+              child: SearchBarWidget(controller: _searchNameController,),
             ),
             const SizedBox(
               height: kSmallSpacingBoxSize,
@@ -72,7 +81,12 @@ class _TasksPageState extends State<TasksPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      searchOrderBy = 'deadline';
+                      loadTasks();
+                    });
+                  },
                   child: const Row(
                     children: [
                       FaIcon(FontAwesomeIcons.calendarDays, color: white, size: kSmallIconSize,),
@@ -86,7 +100,12 @@ class _TasksPageState extends State<TasksPage> {
                   width: kSmallSpacingBoxSize,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      searchOrderBy = 'starred';
+                      loadTasks();
+                    });
+                  },
                   child: const Row(
                     children: [
                       FaIcon(FontAwesomeIcons.solidStar, color: white, size: kSmallIconSize,),
@@ -100,7 +119,13 @@ class _TasksPageState extends State<TasksPage> {
                   width: kSmallSpacingBoxSize,
                 ),
                 IconButton(
-                  onPressed: () {}, 
+                  onPressed: () {
+                    setState(() {
+                      _searchNameController.text = '';
+                      searchOrderBy = null;
+                      loadTasks();
+                    });
+                  }, 
                   icon: FaIcon(FontAwesomeIcons.arrowsRotate, color: Colors.grey.shade400,),
                 ),
               ],

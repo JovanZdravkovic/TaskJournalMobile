@@ -12,9 +12,9 @@ class TasksService {
     return parsedList.map<Task>((json) => Task.fromJson(json)).toList();
   }
 
-  Future<List<Task>> getTasks() async {
+  Future<List<Task>> getTasks([Map<String, dynamic>? queryParams]) async {
     try {
-      final response = await baseService.get('tasks');
+      final response = await baseService.get('tasks', queryParams);
       final success = parseTasksJson(response.data);
       return success;
     } catch (_) {

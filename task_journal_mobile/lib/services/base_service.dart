@@ -28,8 +28,8 @@ class BaseService {
     dio.interceptors.add(CookieManager(cookieJar));
   }
 
-  Future<Response> get(String url) async {
-    final response = await dio.get(baseUrl + url);
+  Future<Response> get(String url, [Map<String, dynamic>? queryParams]) async {
+    final response = await dio.get(baseUrl + url, queryParameters: queryParams);
     return response;
   }
 
