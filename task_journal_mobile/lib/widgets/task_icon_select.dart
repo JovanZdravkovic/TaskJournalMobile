@@ -2,6 +2,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/task_icon.dart';
@@ -47,7 +48,7 @@ enum TaskIconEnum {
   final String value;
   final String label;
 
-  static final List<DropdownMenuEntry<TaskIconEnum>> entries = UnmodifiableListView<DropdownMenuEntry<TaskIconEnum>>(
+  static final List<DropdownMenuEntry<TaskIconEnum>> singleSelectEntries = UnmodifiableListView<DropdownMenuEntry<TaskIconEnum>>(
     values.map<DropdownMenuEntry<TaskIconEnum>>(
       (TaskIconEnum taskIcon) => DropdownMenuEntry<TaskIconEnum>(
         value: taskIcon,
@@ -56,13 +57,24 @@ enum TaskIconEnum {
       ),
     ),
   );
+
+  static final List<DropdownItem<TaskIconEnum>> multiSelectEntries = UnmodifiableListView<DropdownItem<TaskIconEnum>>(
+    values.map<DropdownItem<TaskIconEnum>>(
+      (TaskIconEnum taskIcon) => DropdownItem(
+        value: taskIcon,
+        label: taskIcon.label,
+      ),
+    ),
+  );
 }
 
 class IconSelectWidget extends StatefulWidget {
 
   final void Function(TaskIconEnum? icon) setIconCallback;
+  final bool? initMultipleValue;
+  final MultiSelectController<TaskIconEnum>? initMultipleController;
 
-  const IconSelectWidget({super.key, required this.setIconCallback});
+  const IconSelectWidget({super.key, required this.setIconCallback, this.initMultipleValue, this.initMultipleController});
 
   @override
   State<IconSelectWidget> createState() => _IconSelectWidgetState();
@@ -70,21 +82,57 @@ class IconSelectWidget extends StatefulWidget {
 
 class _IconSelectWidgetState extends State<IconSelectWidget> {
 
-  String? value;
+  bool multiple = false;
+  List<String>? multiSelectValue;
+  String? singleSelectValue;
+  MultiSelectController<TaskIconEnum>? controller;
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.initMultipleValue != null) {
+      multiple = widget.initMultipleValue!;
+    }
+    controller = widget.initMultipleController ?? MultiSelectController<TaskIconEnum>();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownMenu(
-      label: value != null ? TaskIcon(taskIcon: value!) : const Text('Task icon'),
-      dropdownMenuEntries: TaskIconEnum.entries,
-      onSelected: (TaskIconEnum? icon) {
-        setState(() {
-          value = icon?.value;
-        });
-        widget.setIconCallback(icon);
-      },
-      menuHeight: kTaskIconSelectHeight,
-      enabled: true,
-    );
+    if(multiple) {
+      return MultiDropdown<TaskIconEnum>(
+        controller: controller!,
+        onSelectionChange: (selected) {},
+        items: TaskIconEnum.multiSelectEntries,
+        enabled: true,
+        itemBuilder:(item, index, onTap) {
+          return Material(
+            color: white,
+            child: InkWell(
+              onTap: onTap,
+              child: ListTile(
+                leading: TaskIcon(taskIcon: item.value.value),
+                title: Text(item.label),
+              ),
+            ),
+          );
+        },
+        fieldDecoration: const FieldDecoration(
+          labelText: 'Select icons',
+        ),
+      );
+    } else {
+      return DropdownMenu(
+        label: singleSelectValue != null ? TaskIcon(taskIcon: singleSelectValue!) : const Text('Task icon'),
+        dropdownMenuEntries: TaskIconEnum.singleSelectEntries,
+        onSelected: (TaskIconEnum? icon) {
+          setState(() {
+            singleSelectValue = icon?.value;
+          });
+          widget.setIconCallback(icon);
+        },
+        menuHeight: kTaskIconSelectHeight,
+        enabled: true,
+      ); 
+    }
   }
 }

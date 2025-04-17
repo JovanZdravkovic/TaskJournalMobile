@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
@@ -23,6 +24,7 @@ class _TasksPageState extends State<TasksPage> {
   List<Task> tasks = [];
   String? searchOrderBy;
   final _searchNameController = TextEditingController();
+  MultiSelectController<TaskIconEnum> iconSelectController = MultiSelectController<TaskIconEnum>();
 
   @override
   void initState() {
@@ -72,7 +74,7 @@ class _TasksPageState extends State<TasksPage> {
               height: kSmallSpacingBoxSize,
               width: kSmallSpacingBoxSize,
             ),
-            IconSelectWidget(setIconCallback: setIcon),
+            IconSelectWidget(setIconCallback: setIcon, initMultipleValue: true, initMultipleController: iconSelectController,),
             const SizedBox(
               height: kSmallSpacingBoxSize,
               width: kSmallSpacingBoxSize,
@@ -123,6 +125,7 @@ class _TasksPageState extends State<TasksPage> {
                     setState(() {
                       _searchNameController.text = '';
                       searchOrderBy = null;
+                      iconSelectController.clearAll();
                       loadTasks();
                     });
                   }, 
