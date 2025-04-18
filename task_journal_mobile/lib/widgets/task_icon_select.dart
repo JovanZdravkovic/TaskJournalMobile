@@ -113,7 +113,7 @@ class _IconSelectWidgetState extends State<IconSelectWidget> {
         selectedItemBuilder:(item) {
           return Chip(
             shape: RoundedRectangleBorder(
-              borderRadius:  BorderRadius.circular(kChipBorderRadious),
+              borderRadius:  BorderRadius.circular(kChipBorderRadius),
               side: const BorderSide(color: Colors.transparent),
             ),
             padding: const EdgeInsets.all(kExtraSmallPadding),

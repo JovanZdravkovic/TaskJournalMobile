@@ -19,56 +19,60 @@ class TaskRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(kStandardPadding),
-        child: Row(
-          children: [
-            TaskIcon(
-              taskIcon: task.taskIcon,
-            ),
-            const SizedBox(
-              width: kExtraSmallSpacingBoxSize,
-            ),
-            Expanded(
-              child: Text(
-                task.taskName,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-                style: cardTextStyle,
-              ), 
-            ),
-            if (task.starred)
-              const FaIcon(FontAwesomeIcons.solidStar, color: starYellow),
-            const SizedBox(
-              width: kExtraSmallSpacingBoxSize,
-            ),
-            if(task.deadline != null)
-              Text(DateFormat('HH:mm - dd. MMM').format(task.deadline!)),
-            const SizedBox(
-              width: kExtraSmallSpacingBoxSize,
-            ),
-            Ink(
-              height: kSmallIconButtonSize,
-              width: kSmallIconButtonSize,
-              decoration: const ShapeDecoration(color: primaryLight, shape: CircleBorder()),
-              child: IconButton(
-                icon: const FaIcon(FontAwesomeIcons.check),
-                color: white,
-                onPressed: () async {
-                  final result = await Provider.of<TasksService>(context, listen: false).completeTask(task.id);
-                  if(!context.mounted) {
-                    return ;
-                  }
-                  if(result) {
-                    completeTaskCallback(task.id);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully completed task'));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while completing task'));
-                  }
-                },
+      child: InkWell(
+        onTap: () {},
+        borderRadius: const BorderRadius.all(Radius.circular(kCardBorderRadius)),
+        child: Padding(
+          padding: const EdgeInsets.all(kStandardPadding),
+          child: Row(
+            children: [
+              TaskIcon(
+                taskIcon: task.taskIcon,
               ),
-            ),
-          ],
+              const SizedBox(
+                width: kExtraSmallSpacingBoxSize,
+              ),
+              Expanded(
+                child: Text(
+                  task.taskName,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                  style: cardTextStyle,
+                ), 
+              ),
+              if (task.starred)
+                const FaIcon(FontAwesomeIcons.solidStar, color: starYellow),
+              const SizedBox(
+                width: kExtraSmallSpacingBoxSize,
+              ),
+              if(task.deadline != null)
+                Text(DateFormat('HH:mm - dd. MMM').format(task.deadline!)),
+              const SizedBox(
+                width: kExtraSmallSpacingBoxSize,
+              ),
+              Ink(
+                height: kSmallIconButtonSize,
+                width: kSmallIconButtonSize,
+                decoration: const ShapeDecoration(color: primaryLight, shape: CircleBorder()),
+                child: IconButton(
+                  icon: const FaIcon(FontAwesomeIcons.check),
+                  color: white,
+                  onPressed: () async {
+                    final result = await Provider.of<TasksService>(context, listen: false).completeTask(task.id);
+                    if(!context.mounted) {
+                      return ;
+                    }
+                    if(result) {
+                      completeTaskCallback(task.id);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully completed task'));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while completing task'));
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

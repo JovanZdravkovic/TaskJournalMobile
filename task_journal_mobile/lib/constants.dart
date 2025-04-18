@@ -31,4 +31,5 @@ const kTaskIconSelectHeight = 250.0;
 const kTaskIconSelectWidth = 250.0;
 
 const kInputBorderRadius = 15.0;
-const kChipBorderRadious = 20.0;
+const kChipBorderRadius = 20.0;
+const kCardBorderRadius = 8.0;
