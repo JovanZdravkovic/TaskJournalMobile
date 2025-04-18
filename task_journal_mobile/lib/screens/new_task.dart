@@ -39,6 +39,13 @@ class _NewTaskPageState extends State<NewTaskPage> {
   }
 
   @override
+  void dispose() {
+    _taskNameController.dispose();
+    _taskDescController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

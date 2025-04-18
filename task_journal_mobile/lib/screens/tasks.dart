@@ -27,6 +27,13 @@ class _TasksPageState extends State<TasksPage> {
   MultiSelectController<String> iconSelectController = MultiSelectController<String>();
 
   @override
+  void dispose() {
+    _searchNameController.dispose();
+    iconSelectController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     loadTasks();
@@ -70,7 +77,7 @@ class _TasksPageState extends State<TasksPage> {
           children: [
             SizedBox(
               width: kMediumInputWidth,
-              child: SearchBarWidget(controller: _searchNameController,),
+              child: SearchBarWidget(controller: _searchNameController, onChangeCallback: loadTasks,),
             ),
             const SizedBox(
               height: kSmallSpacingBoxSize,
