@@ -1,6 +1,7 @@
 const kDrawerIconSize = 30.0;
 const kDrawerHeaderFontSize = 40.0;
 
+const kExtraSmallInputWidth = 110.0;
 const kSmallInputWidth = 150.0;
 const kMediumInputWidth = 250.0;
 const kLargeInputWidth = 300.0;

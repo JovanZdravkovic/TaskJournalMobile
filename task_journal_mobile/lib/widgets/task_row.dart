@@ -32,7 +32,8 @@ class TaskRow extends StatelessWidget {
               const SizedBox(
                 width: kExtraSmallSpacingBoxSize,
               ),
-              Expanded(
+              SizedBox(
+                width: kExtraSmallInputWidth,
                 child: Text(
                   task.taskName,
                   overflow: TextOverflow.ellipsis,
@@ -42,8 +43,10 @@ class TaskRow extends StatelessWidget {
               ),
               if (task.starred)
                 const FaIcon(FontAwesomeIcons.solidStar, color: starYellow),
-              const SizedBox(
-                width: kExtraSmallSpacingBoxSize,
+              const Expanded(
+                child: SizedBox(
+                  width: kExtraSmallSpacingBoxSize,
+                ),
               ),
               if(task.deadline != null)
                 Text(DateFormat('HH:mm - dd. MMM').format(task.deadline!)),
