@@ -20,7 +20,9 @@ class TaskRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, '/task');
+        },
         borderRadius: const BorderRadius.all(Radius.circular(kCardBorderRadius)),
         child: Padding(
           padding: const EdgeInsets.all(kStandardPadding),
