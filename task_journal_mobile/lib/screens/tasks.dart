@@ -24,7 +24,7 @@ class _TasksPageState extends State<TasksPage> {
   List<Task> tasks = [];
   String? searchOrderBy;
   final _searchNameController = TextEditingController();
-  MultiSelectController<TaskIconEnum> iconSelectController = MultiSelectController<TaskIconEnum>();
+  MultiSelectController<String> iconSelectController = MultiSelectController<String>();
 
   @override
   void initState() {
@@ -33,8 +33,10 @@ class _TasksPageState extends State<TasksPage> {
   }
 
   Map<String, dynamic> createPayload() {
+    var icons = iconSelectController.selectedItems.map((valueItemIcon) => valueItemIcon.value).toList();
     return {
       'searchName': _searchNameController.text,
+      'searchIcons': icons,
       'searchOrderBy': searchOrderBy,
     };
   }
@@ -74,7 +76,7 @@ class _TasksPageState extends State<TasksPage> {
               height: kSmallSpacingBoxSize,
               width: kSmallSpacingBoxSize,
             ),
-            IconSelectWidget(setIconCallback: setIcon, initMultipleValue: true, initMultipleController: iconSelectController,),
+            IconSelectWidget(multipleIconsChangeCallback: loadTasks, initMultipleValue: true, initMultipleController: iconSelectController,),
             const SizedBox(
               height: kSmallSpacingBoxSize,
               width: kSmallSpacingBoxSize,
