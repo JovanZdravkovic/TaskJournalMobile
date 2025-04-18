@@ -43,7 +43,7 @@ class TaskRow extends StatelessWidget {
               width: kExtraSmallSpacingBoxSize,
             ),
             if(task.deadline != null)
-              Text(DateFormat('HH:mm - dd MMM').format(task.deadline!)),
+              Text(DateFormat('HH:mm - dd. MMM').format(task.deadline!)),
             const SizedBox(
               width: kExtraSmallSpacingBoxSize,
             ),
