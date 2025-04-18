@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
@@ -26,7 +27,7 @@ class TaskRow extends StatelessWidget {
               taskIcon: task.taskIcon,
             ),
             const SizedBox(
-              width: kSmallSpacingBoxSize,
+              width: kExtraSmallSpacingBoxSize,
             ),
             Expanded(
               child: Text(
@@ -39,7 +40,12 @@ class TaskRow extends StatelessWidget {
             if (task.starred)
               const FaIcon(FontAwesomeIcons.solidStar, color: starYellow),
             const SizedBox(
-              width: kSmallSpacingBoxSize,
+              width: kExtraSmallSpacingBoxSize,
+            ),
+            if(task.deadline != null)
+              Text(DateFormat('HH:mm - dd MMM').format(task.deadline!)),
+            const SizedBox(
+              width: kExtraSmallSpacingBoxSize,
             ),
             Ink(
               height: kSmallIconButtonSize,
