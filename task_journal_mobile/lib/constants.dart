@@ -31,6 +31,8 @@ const kSnackBarDuration = 4;
 const kTaskIconSelectHeight = 250.0;
 const kTaskIconSelectWidth = 250.0;
 
+const kTaskCardHeight = 400.0;
+
 const kInputBorderRadius = 15.0;
 const kChipBorderRadius = 20.0;
 const kCardBorderRadius = 8.0;
