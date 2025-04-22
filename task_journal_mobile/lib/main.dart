@@ -45,7 +45,6 @@ class TaskJournalApp extends StatelessWidget {
         '/': (context) => const AuthGuard(child: TasksPage()),
         '/tasks': (context) => const AuthGuard(child: TasksPage()),
         '/tasks_history': (context) => const AuthGuard(child: TasksHistoryPage()),
-        '/task': (context) => const AuthGuard(child: TaskPage()),
         '/profile': (context) => const AuthGuard(child: ProfilePage()),
         '/new_task': (context) => const AuthGuard(child: NewTaskPage()),
         '/login': (context) => const LoginPage(),

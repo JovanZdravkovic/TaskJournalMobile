@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
+import 'package:task_journal_mobile/screens/task.dart';
 import 'package:task_journal_mobile/services/tasks_service.dart';
+import 'package:task_journal_mobile/utils/auth_guard.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/snackbar.dart';
 import 'package:task_journal_mobile/widgets/task_icon.dart';
@@ -21,7 +23,12 @@ class TaskRow extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, '/task');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AuthGuard(child: TaskPage(taskId: task.id)),
+            ),
+          );
         },
         borderRadius: const BorderRadius.all(Radius.circular(kCardBorderRadius)),
         child: Padding(

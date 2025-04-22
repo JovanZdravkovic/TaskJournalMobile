@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:task_journal_mobile/models/task.dart';
 import 'package:task_journal_mobile/services/base_service.dart';
 
@@ -15,10 +17,20 @@ class TasksService {
   Future<List<Task>> getTasks([Map<String, dynamic>? queryParams]) async {
     try {
       final response = await baseService.get('tasks', queryParams);
-      final success = parseTasksJson(response.data);
-      return success;
+      final tasks = parseTasksJson(response.data);
+      return tasks;
     } catch (_) {
       return [];
+    }
+  }
+
+  Future<Task?> getTask(String taskId) async {
+    try {
+      final response = await baseService.get('task/$taskId');
+      final task = Task.fromJson(response.data);
+      return task;
+    } catch(_) {
+      return null;
     }
   }
 
