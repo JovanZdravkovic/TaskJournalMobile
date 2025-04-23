@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
@@ -43,7 +44,7 @@ class _TaskPageState extends State<TaskPage> {
         ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(kStandardPadding),
+            padding: const EdgeInsets.all(kLargePadding),
             child: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(kInputBorderRadius)),
@@ -54,6 +55,7 @@ class _TaskPageState extends State<TaskPage> {
               child: Padding(
                 padding: const EdgeInsets.all(kStandardPadding),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -75,7 +77,20 @@ class _TaskPageState extends State<TaskPage> {
                           false => const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kLargeIconSize),
                         }
                       ],
-                    )
+                    ),
+                    const SizedBox(
+                      height: kSmallSpacingBoxSize,
+                      width: kSmallSpacingBoxSize,
+                    ),
+                    Expanded(
+                      child: Text(task!.taskDesc, style: cardTextStyle,),
+                    ),
+                    const SizedBox(
+                      height: kSmallSpacingBoxSize,
+                      width: kSmallSpacingBoxSize,
+                    ),
+                    if(task!.deadline != null)
+                      Text('Deadline: ${DateFormat('HH:mm - dd. MMM yyyy').format(task!.deadline!)}', style: cardTextStyle),
                   ],
                 ),
               ),
