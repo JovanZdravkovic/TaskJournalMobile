@@ -6,6 +6,7 @@ import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
 import 'package:task_journal_mobile/services/tasks_service.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
+import 'package:task_journal_mobile/widgets/snackbar.dart';
 import 'package:task_journal_mobile/widgets/task_icon.dart';
 
 class TaskPage extends StatefulWidget {
@@ -124,7 +125,42 @@ class _TaskPageState extends State<TaskPage> {
                 width: kFloatingActionButtonSize,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var result = await showDialog<bool>(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Are you sure you want to delete this task?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                      if (!context.mounted) return;
+
+                      if(result != null && result) {
+                        final successResult = await Provider.of<TasksService>(context, listen: false).deleteTask(widget.taskId);
+
+                        if (!context.mounted) return;
+
+                        if(successResult) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully deleted task'));
+                          Navigator.pushNamed(context, '/tasks');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while deleting task'));
+                        }
+                      }
+                    },
                     heroTag: null,
                     shape: const CircleBorder(),
                     backgroundColor: dark,

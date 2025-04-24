@@ -53,4 +53,14 @@ class TasksService {
       return '';
     }
   }
+
+  Future<bool> deleteTask(String taskId) async {
+    try {
+      final response = await baseService.delete('task/$taskId');
+      final success = response.data['success'];
+      return success;
+    } catch (_) {
+      return false;
+    }
+  }
 }
