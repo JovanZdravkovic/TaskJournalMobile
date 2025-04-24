@@ -156,6 +156,11 @@ var dropdownTheme = DropdownMenuThemeData(
   ),
 );
 
+var containerDecoration = BoxDecoration(
+  borderRadius: const BorderRadius.all(Radius.circular(kInputBorderRadius)),
+  border: Border.all(color: grayDark, width: 2.0),
+);
+
 var drawerTheme = const DrawerThemeData(
   backgroundColor: white,
 );
