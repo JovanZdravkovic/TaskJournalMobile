@@ -31,6 +31,7 @@ class _TaskPageState extends State<TaskPage> {
   String? taskIcon;
   bool starred = false;
   DateTime? deadline;
+  String? taskIconFieldError;
 
   Task? task;
   bool editMode = false;
@@ -88,25 +89,37 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   void updateTask() async {
-    final result = await Provider.of<TasksService>(context, listen: false).updateTask(
-      { 
-        'taskName': taskNameController.text,
-        'taskIcon': taskIcon,
-        'taskDesc': taskDescController.text,
-        'deadline': deadline?.toUtc().toIso8601String(),
-        'starred': starred,
-      },
-      widget.taskId
-    );
+    if(editTaskFormKey.currentState!.validate() && taskIcon != null) {
+      final result = await Provider.of<TasksService>(context, listen: false).updateTask(
+        { 
+          'taskName': taskNameController.text,
+          'taskIcon': taskIcon,
+          'taskDesc': taskDescController.text,
+          'deadline': deadline?.toUtc().toIso8601String(),
+          'starred': starred,
+        },
+        widget.taskId
+      );
 
-    if (!context.mounted) return;
+      if (!context.mounted) return;
 
-    if(result) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully updated task'));
-      loadTask();
-      toggleEditMode();
+      if(result) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully updated task'));
+        loadTask();
+        toggleEditMode();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while updating task'));
+      }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while updating task'));
+      if(taskIcon == null) {
+        setState(() {
+          taskIconFieldError = 'Task icon cannot be empty';
+        });
+      } else {
+        setState(() {
+          taskIconFieldError = null;
+        });
+      }
     }
   }
 
@@ -169,18 +182,17 @@ class _TaskPageState extends State<TaskPage> {
           title: const Text('Edit task'),
         ),
         body: Center(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(kLargePadding),
-              child: TaskFormWidget(
-                taskFormKey: editTaskFormKey, 
-                taskNameController: taskNameController, 
-                taskDescController: taskDescController, 
-                setStarredCallback: setStarred, 
-                setIconCallback: setIconEnum, 
-                setDeadlineCallback: setDeadline,
-                initTask: task,
-              ),
+          child: Padding(
+            padding: const EdgeInsets.all(kLargePadding),
+            child: TaskFormWidget(
+              taskFormKey: editTaskFormKey, 
+              taskNameController: taskNameController, 
+              taskDescController: taskDescController, 
+              setStarredCallback: setStarred, 
+              setIconCallback: setIconEnum, 
+              setDeadlineCallback: setDeadline,
+              iconFieldError: taskIconFieldError,
+              initTask: task,
             ),
           ),
         ),

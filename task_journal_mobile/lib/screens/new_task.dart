@@ -10,6 +10,7 @@ import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/label_divider.dart';
 import 'package:task_journal_mobile/widgets/snackbar.dart';
 import 'package:task_journal_mobile/widgets/star_input.dart';
+import 'package:task_journal_mobile/widgets/task_form.dart';
 import 'package:task_journal_mobile/widgets/task_icon_select.dart';
 
 class NewTaskPage extends StatefulWidget {
@@ -32,10 +33,49 @@ class _NewTaskPageState extends State<NewTaskPage> {
     starred = starredValue;
   }
 
-  void setIcon(TaskIconEnum? icon) {
+  void setIconEnum(TaskIconEnum? icon) {
     setState(() {
       iconField = icon?.value;
     });
+  }
+
+  void setDeadline(DateTime? deadlineValue) {
+    setState(() {
+      deadline = deadlineValue;
+    });
+  }
+
+  void createTask() async {
+    if(_newTaskFormKey.currentState!.validate() && iconField != null && starred != null) {
+      final result = await Provider.of<TasksService>(context, listen: false).createTask(
+        { 
+          'taskName': _taskNameController.text,
+          'taskIcon': iconField,
+          'taskDesc': _taskDescController.text,
+          'deadline': deadline?.toUtc().toIso8601String(),
+          'starred': starred,
+        }
+      );
+
+      if (!context.mounted) return;
+
+      if(result != '') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully created task'));
+        Navigator.pushNamed(context, '/tasks');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while creating task'));
+      }
+    } else {
+      if(iconField == null) {
+        setState(() {
+          iconFieldError = 'Task icon cannot be empty';
+        });
+      } else {
+        setState(() {
+          iconFieldError = null;
+        });
+      }
+    }
   }
 
   @override
@@ -51,122 +91,26 @@ class _NewTaskPageState extends State<NewTaskPage> {
       appBar: AppBar(
         title: const Text('New task'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(kLargePadding),
-        child: Form(
-          key: _newTaskFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: kMediumInputWidth,
-                    child: TextFormField(
-                      controller: _taskNameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter task name',
-                      ),
-                      validator: (value) => TaskFormValidators.taskName(value),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: kSmallSpacingBoxSize,
-                    width: kSmallSpacingBoxSize,
-                  ),
-                  StarInput(setCallback: setStarred),
-                ],
-              ),
-              const SizedBox(
-                height: kSmallSpacingBoxSize,
-                width: kSmallSpacingBoxSize,
-              ),
-              IconSelectWidget(setIconCallback: setIcon),
-              if(iconFieldError != null)
-                Text('$iconFieldError', style: dangerTextStyle,),
-              const SizedBox(
-                height: kSmallSpacingBoxSize,
-                width: kSmallSpacingBoxSize,
-              ),
-              SizedBox(
-                child: TextFormField(
-                  maxLines: 5,
-                  controller: _taskDescController,
-                  decoration: const InputDecoration(
-                    labelText: 'Enter task description',
-                    alignLabelWithHint: true,
-                  ),
-                  validator: (value) => TaskFormValidators.taskDesc(value),
-                ),
-              ),
-              const SizedBox(
-                height: kSmallSpacingBoxSize,
-                width: kSmallSpacingBoxSize,
-              ),
-              labelDivider('Optional'),
-              Row(
-                children: [
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.calendar_month, color: white,),
-                    onPressed: () {
-                      DatePicker.showDateTimePicker(
-                        context,
-                        showTitleActions: true,
-                        minTime: DateTime(2025, 1, 1),
-                        maxTime: DateTime(2050, 1, 1), 
-                        onChanged: (date) {}, 
-                        onConfirm: (date) {
-                          setState(() {
-                            deadline = date;
-                          });
-                        },
-                      );
-                    },
-                    label: const Text('Deadline'),
-                  ),
-                  const SizedBox(
-                    height: kSmallSpacingBoxSize,
-                    width: kSmallSpacingBoxSize,
-                  ),
-                  if(deadline != null)
-                    Text(DateFormat('HH:mm - dd MMM y').format(deadline!)),
-                ],
-              ),
-            ],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(kLargePadding),
+          child: TaskFormWidget(
+            taskFormKey: _newTaskFormKey, 
+            taskNameController: _taskNameController, 
+            taskDescController: _taskDescController, 
+            setStarredCallback: setStarred, 
+            setIconCallback: setIconEnum, 
+            setDeadlineCallback: setDeadline,
+            iconFieldError: iconFieldError,
           ),
-        ), 
+        ),
       ),
       floatingActionButton: SizedBox(
         height: kFloatingActionButtonSize,
         width: kFloatingActionButtonSize,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () async {
-              if(_newTaskFormKey.currentState!.validate() && iconField != null && starred != null) {
-                final result = await Provider.of<TasksService>(context, listen: false).createTask(
-                  { 
-                    'taskName': _taskNameController.text,
-                    'taskIcon': iconField,
-                    'taskDesc': _taskDescController.text,
-                    'deadline': deadline?.toUtc().toIso8601String(),
-                    'starred': starred,
-                  }
-                );
-
-                if (!context.mounted) return;
-
-                if(result != '') {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully created task'));
-                  Navigator.pushNamed(context, '/tasks');
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error while creating task'));
-                }
-              } else if(iconField == null) {
-                setState(() {
-                  iconFieldError = 'Task icon cannot be empty';
-                });
-              }
-            },
+            onPressed: createTask,
             shape: const CircleBorder(),
             backgroundColor: secondary,
             child: const FaIcon(FontAwesomeIcons.solidFloppyDisk, color: white, size: kLargeIconSize,),
