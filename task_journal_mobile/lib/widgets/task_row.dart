@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -15,8 +17,9 @@ class TaskRow extends StatelessWidget {
   
   final Task task;
   final void Function(String taskId) completeTaskCallback;
+  final Future<void> Function() loadTasksCallback;
 
-  const TaskRow({super.key, required this.task, required this.completeTaskCallback});
+  const TaskRow({super.key, required this.task, required this.completeTaskCallback, required this.loadTasksCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class TaskRow extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => AuthGuard(child: TaskPage(taskId: task.id)),
             ),
-          );
+          ).then((value) => loadTasksCallback());
         },
         borderRadius: const BorderRadius.all(Radius.circular(kCardBorderRadius)),
         child: Padding(

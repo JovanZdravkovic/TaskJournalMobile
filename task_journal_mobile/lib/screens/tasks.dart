@@ -148,7 +148,7 @@ class _TasksPageState extends State<TasksPage> {
                 0 => const Text('No tasks.'), 
                 _ => ListView(children: [
                         for(var i = 0; i < tasks.length; i++) 
-                          TaskRow(task: tasks[i], completeTaskCallback: completeTask,),
+                          TaskRow(task: tasks[i], completeTaskCallback: completeTask, loadTasksCallback: loadTasks,),
                       ],
                     ),
               },
