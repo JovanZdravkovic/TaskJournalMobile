@@ -63,4 +63,14 @@ class TasksService {
       return false;
     }
   }
+
+  Future<bool> updateTask(Map<String, dynamic> task, String taskId) async {
+    try {
+      final response = await baseService.put('task/update/$taskId', task);
+      final success = response.data['success'];
+      return success;
+    } catch (_) {
+      return false;
+    }
+  }
 }

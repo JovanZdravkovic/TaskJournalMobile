@@ -67,6 +67,14 @@ enum TaskIconEnum {
       ),
     ),
   );
+
+  static TaskIconEnum? fromValue(String iconValue) {
+    try {
+      return TaskIconEnum.values.firstWhere((taskIconEnum) => taskIconEnum.value == iconValue);
+    } catch (_) {
+      return null;
+    }
+  }
 }
 
 class IconSelectWidget extends StatefulWidget {
@@ -75,8 +83,9 @@ class IconSelectWidget extends StatefulWidget {
   final Future<void> Function()? multipleIconsChangeCallback;
   final bool? initMultipleValue;
   final MultiSelectController<String>? initMultipleController;
+  final String? initSingleIconValue;
 
-  const IconSelectWidget({super.key, this.setIconCallback, this.initMultipleValue, this.initMultipleController, this.multipleIconsChangeCallback});
+  const IconSelectWidget({super.key, this.setIconCallback, this.initMultipleValue, this.initMultipleController, this.multipleIconsChangeCallback, this.initSingleIconValue});
 
   @override
   State<IconSelectWidget> createState() => _IconSelectWidgetState();
@@ -91,11 +100,12 @@ class _IconSelectWidgetState extends State<IconSelectWidget> {
 
   @override
   void initState() {
-    super.initState();
     if(widget.initMultipleValue != null) {
       multiple = widget.initMultipleValue!;
     }
     controller = widget.initMultipleController ?? MultiSelectController<String>();
+    singleSelectValue = widget.initSingleIconValue;
+    super.initState();
   }
 
   @override
@@ -144,6 +154,7 @@ class _IconSelectWidgetState extends State<IconSelectWidget> {
       return DropdownMenu(
         label: singleSelectValue != null ? TaskIcon(taskIcon: singleSelectValue!) : const Text('Task icon'),
         dropdownMenuEntries: TaskIconEnum.singleSelectEntries,
+        initialSelection: singleSelectValue != null ? TaskIconEnum.fromValue(singleSelectValue!) : null,
         onSelected: (TaskIconEnum? icon) {
           setState(() {
             singleSelectValue = icon?.value;
