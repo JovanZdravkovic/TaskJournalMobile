@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_journal_mobile/widgets/drawer.dart';
+import 'package:task_journal_mobile/widgets/rating_input.dart';
 
 class TasksHistoryPage extends StatefulWidget {
   const TasksHistoryPage({ super.key });
@@ -9,6 +10,15 @@ class TasksHistoryPage extends StatefulWidget {
 }
 
 class _TasksHistoryPageState extends State<TasksHistoryPage> {
+
+  int? starRating;
+
+  void setStarRating(int rating){
+    setState(() {
+      starRating = rating;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
