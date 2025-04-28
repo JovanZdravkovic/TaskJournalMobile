@@ -35,17 +35,20 @@ class TaskRow extends StatelessWidget {
         },
         borderRadius: const BorderRadius.all(Radius.circular(kCardBorderRadius)),
         child: Padding(
-          padding: const EdgeInsets.all(kStandardPadding),
+          padding: const EdgeInsets.symmetric(vertical: kStandardPadding, horizontal: kExtraSmallPadding),
           child: Row(
             children: [
+              task.starred ? const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kMediumIconSize,) : const SizedBox(height: kMediumIconSize, width: kMediumIconSize,),
+              const SizedBox(
+                width: kExtraSmallSpacingBoxSize,
+              ),
               TaskIcon(
                 taskIcon: task.taskIcon,
               ),
               const SizedBox(
                 width: kExtraSmallSpacingBoxSize,
               ),
-              SizedBox(
-                width: kExtraSmallInputWidth,
+              Expanded(
                 child: Text(
                   task.taskName,
                   overflow: TextOverflow.ellipsis,
@@ -53,12 +56,8 @@ class TaskRow extends StatelessWidget {
                   style: cardTextStyle,
                 ), 
               ),
-              if (task.starred)
-                const FaIcon(FontAwesomeIcons.solidStar, color: starYellow),
-              const Expanded(
-                child: SizedBox(
-                  width: kExtraSmallSpacingBoxSize,
-                ),
+              const SizedBox(
+                width: kExtraSmallSpacingBoxSize,
               ),
               if(task.deadline != null)
                 Text(DateFormat('HH:mm - dd. MMM').format(task.deadline!)),

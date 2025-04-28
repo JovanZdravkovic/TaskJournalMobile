@@ -20,6 +20,7 @@ const kAppBarFontSize = 20.0;
 const kCardFontSize = 15.0;
 
 const kSmallIconSize = 20.0;
+const kMediumIconSize = 25.0;
 const kLargeIconSize = 30.0;
 const kSmallIconButtonSize = 40.0;
 const kLargeIconButtonSize = 50.0;
