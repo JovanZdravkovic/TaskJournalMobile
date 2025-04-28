@@ -88,20 +88,21 @@ class _TasksHistoryPageState extends State<TasksHistoryPage> {
               ),
               Row(
                 children: [
-                  Expanded(
-                    child: RatingInputWidget(setRatingCallback: setStarRating),
+                  RatingInputWidget(setRatingCallback: setStarRating),
+                  const Expanded(
+                    child: SizedBox(),
                   ),
                   IconButton(
-                  onPressed: () {
-                    setState(() {
-                      searchNameController.text = '';
-                      searchRating = null;
-                      iconSelectController.clearAll();
-                      loadTasksHistory();
-                    });
-                  }, 
-                  icon: FaIcon(FontAwesomeIcons.arrowsRotate, color: Colors.grey.shade400,),
-                ),
+                    onPressed: () {
+                      setState(() {
+                        searchNameController.text = '';
+                        searchRating = null;
+                        iconSelectController.clearAll();
+                        loadTasksHistory();
+                      });
+                    }, 
+                    icon: FaIcon(FontAwesomeIcons.arrowsRotate, color: Colors.grey.shade400,),
+                  ),
                 ],
               ),
               labelDivider('Tasks History'),

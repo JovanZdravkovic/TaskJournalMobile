@@ -25,58 +25,73 @@ class _RatingInputWidgetState extends State<RatingInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        rating != null && rating! >= 1 
-          ? GestureDetector(
-              child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kSmallIconSize),
-              onTap: () {
-                setRating(1);
-              },
-            )
-          : GestureDetector(
-              child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kSmallIconSize),
-              onTap: () {
-                setRating(1);
-              },
+    return Container(
+      padding: const EdgeInsets.all(kSmallPadding),
+      decoration: containerDecoration,
+      child: Row(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              rating != null && rating! >= 1 
+                ? GestureDetector(
+                    child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kSmallIconSize),
+                    onTap: () {
+                      setRating(1);
+                    },
+                  )
+                : GestureDetector(
+                    child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kSmallIconSize),
+                    onTap: () {
+                      setRating(1);
+                    },
+                  ),
+              const SizedBox(
+                height: kExtraSmallSpacingBoxSize,
+                width: kExtraSmallSpacingBoxSize,
+              ),
+              rating != null && rating! >= 2 
+                ? GestureDetector(
+                    child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kLargeIconSize),
+                    onTap: () {
+                      setRating(2);
+                    },
+                  )
+                : GestureDetector(
+                    child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kLargeIconSize),
+                    onTap: () {
+                      setRating(2);
+                    },
+                  ),
+              const SizedBox(
+                height: kExtraSmallSpacingBoxSize,
+                width: kExtraSmallSpacingBoxSize,
+              ),
+              rating != null && rating! >= 3 
+                ? GestureDetector(
+                    child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kSmallIconSize),
+                    onTap: () {
+                      setRating(3);
+                    },
+                  )
+                : GestureDetector(
+                    child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kSmallIconSize),
+                    onTap: () {
+                      setRating(3);
+                    },
+                  ),
+            ],
+          ),
+          if(rating == null) ...[
+            const SizedBox(
+              height: kExtraSmallSpacingBoxSize,
+              width: kExtraSmallSpacingBoxSize,
             ),
-        const SizedBox(
-          height: kExtraSmallSpacingBoxSize,
-          width: kExtraSmallSpacingBoxSize,
-        ),
-        rating != null && rating! >= 2 
-          ? GestureDetector(
-              child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kLargeIconSize),
-              onTap: () {
-                setRating(2);
-              },
-            )
-          : GestureDetector(
-              child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kLargeIconSize),
-              onTap: () {
-                setRating(2);
-              },
-            ),
-        const SizedBox(
-          height: kExtraSmallSpacingBoxSize,
-          width: kExtraSmallSpacingBoxSize,
-        ),
-        rating != null && rating! >= 3 
-          ? GestureDetector(
-              child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kSmallIconSize),
-              onTap: () {
-                setRating(3);
-              },
-            )
-          : GestureDetector(
-              child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kSmallIconSize),
-              onTap: () {
-                setRating(3);
-              },
-            ),
-      ],
+            const Text('Select rating'),
+          ]
+        ],
+      ),
     );
   }
 }
