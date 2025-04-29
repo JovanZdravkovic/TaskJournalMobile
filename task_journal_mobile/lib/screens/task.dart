@@ -7,6 +7,8 @@ import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/task.dart';
 import 'package:task_journal_mobile/services/tasks_service.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
+import 'package:task_journal_mobile/widgets/edit_tools.dart';
+import 'package:task_journal_mobile/widgets/form_submit_tools.dart';
 import 'package:task_journal_mobile/widgets/snackbar.dart';
 import 'package:task_journal_mobile/widgets/star_input.dart';
 import 'package:task_journal_mobile/widgets/task_form.dart';
@@ -178,63 +180,26 @@ class _TaskPageState extends State<TaskPage> {
     if(task != null) {
       if(editMode) {
         return Scaffold(
-        appBar: AppBar(
-          title: const Text('Edit task'),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(kLargePadding),
-            child: TaskFormWidget(
-              taskFormKey: editTaskFormKey, 
-              taskNameController: taskNameController, 
-              taskDescController: taskDescController, 
-              setStarredCallback: setStarred, 
-              setIconCallback: setIconEnum, 
-              setDeadlineCallback: setDeadline,
-              iconFieldError: taskIconFieldError,
-              initTask: task,
+          appBar: AppBar(
+            title: const Text('Edit task'),
+          ),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(kLargePadding),
+              child: TaskFormWidget(
+                taskFormKey: editTaskFormKey, 
+                taskNameController: taskNameController, 
+                taskDescController: taskDescController, 
+                setStarredCallback: setStarred, 
+                setIconCallback: setIconEnum, 
+                setDeadlineCallback: setDeadline,
+                iconFieldError: taskIconFieldError,
+                initTask: task,
+              ),
             ),
           ),
-        ),
-        floatingActionButton: SizedBox(
-            width: kMediumInputWidth,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  height: kFloatingActionButtonSize,
-                  width: kFloatingActionButtonSize,
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      onPressed: updateTask,
-                      heroTag: null,
-                      shape: const CircleBorder(),
-                      backgroundColor: dark,
-                      child: const FaIcon(FontAwesomeIcons.check, color: white, size: kLargeIconSize,),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: kSpacingBoxSize,
-                  width: kSpacingBoxSize,
-                ),
-                SizedBox(
-                  height: kFloatingActionButtonSize,
-                  width: kFloatingActionButtonSize,
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      onPressed: toggleEditMode,
-                      heroTag: null,
-                      shape: const CircleBorder(),
-                      backgroundColor: dark,
-                      child: const FaIcon(FontAwesomeIcons.xmark, color: white, size: kLargeIconSize,),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-      );
+          floatingActionButton: FormSubmitToolsWidget(firstCallback: updateTask, secondCallback: toggleEditMode),
+        );
       } else {
         return Scaffold(
           appBar: AppBar(
@@ -297,44 +262,7 @@ class _TaskPageState extends State<TaskPage> {
               ),
             ),
           ),
-          floatingActionButton: SizedBox(
-            width: kMediumInputWidth,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  height: kFloatingActionButtonSize,
-                  width: kFloatingActionButtonSize,
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      onPressed: toggleEditMode,
-                      heroTag: null,
-                      shape: const CircleBorder(),
-                      backgroundColor: dark,
-                      child: const FaIcon(FontAwesomeIcons.pencil, color: white, size: kLargeIconSize,),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: kSpacingBoxSize,
-                  width: kSpacingBoxSize,
-                ),
-                SizedBox(
-                  height: kFloatingActionButtonSize,
-                  width: kFloatingActionButtonSize,
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      onPressed: deleteTask,
-                      heroTag: null,
-                      shape: const CircleBorder(),
-                      backgroundColor: dark,
-                      child: const FaIcon(FontAwesomeIcons.trashCan, color: white, size: kLargeIconSize,),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          floatingActionButton: EditToolsWidget(firstCallback: toggleEditMode, secondCallback: deleteTask),
         );
       }
     } else {

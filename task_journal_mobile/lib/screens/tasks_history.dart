@@ -113,7 +113,7 @@ class _TasksHistoryPageState extends State<TasksHistoryPage> {
                 0 => const Text('No tasks history.'), 
                 _ => ListView(children: [
                         for(var i = 0; i < tasksHistory.length; i++) 
-                          TaskHistoryRow(taskHistory: tasksHistory[i]),
+                          TaskHistoryRow(taskHistory: tasksHistory[i], loadTasksHistoryCallback: loadTasksHistory),
                       ],
                     ),
               },

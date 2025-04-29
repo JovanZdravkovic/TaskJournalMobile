@@ -23,4 +23,33 @@ class TasksHistoryService {
     }
   }
 
+  Future<TaskHistory?> getTaskHistory(String taskHistoryId) async {
+    try {
+      final response = await baseService.get('task_history/$taskHistoryId');
+      final taskHistory = TaskHistory.fromJson(response.data);
+      return taskHistory;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<bool> deleteTaskHistory(String taskHistoryId) async {
+    try {
+      final response = await baseService.delete('task_history/$taskHistoryId');
+      final success = response.data['success'];
+      return success;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> updateTaskHistory(Map<String, dynamic> taskHistory, String taskHistoryId) async {
+    try {
+      final response = await baseService.put('task_history/$taskHistoryId', taskHistory);
+      final success = response.data['success'];
+      return success;
+    } catch (_) {
+      return false;
+    }
+  }
 }
