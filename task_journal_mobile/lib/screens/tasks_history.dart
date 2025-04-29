@@ -10,6 +10,7 @@ import 'package:task_journal_mobile/widgets/label_divider.dart';
 import 'package:task_journal_mobile/widgets/rating_input.dart';
 import 'package:task_journal_mobile/widgets/reset_filters_button.dart';
 import 'package:task_journal_mobile/widgets/search_bar.dart';
+import 'package:task_journal_mobile/widgets/task_history_row.dart';
 import 'package:task_journal_mobile/widgets/task_icon_select.dart';
 
 class TasksHistoryPage extends StatefulWidget {
@@ -46,6 +47,7 @@ class _TasksHistoryPageState extends State<TasksHistoryPage> {
     setState(() {
       searchRating = rating;
     });
+    loadTasksHistory();
   }
 
   void resetFilters() {
@@ -106,6 +108,16 @@ class _TasksHistoryPageState extends State<TasksHistoryPage> {
                 ],
               ),
               labelDivider('Tasks History'),
+              Expanded(
+              child: switch (tasksHistory.length) {
+                0 => const Text('No tasks history.'), 
+                _ => ListView(children: [
+                        for(var i = 0; i < tasksHistory.length; i++) 
+                          TaskHistoryRow(taskHistory: tasksHistory[i]),
+                      ],
+                    ),
+              },
+            ),
             ],
           ),
         ),
