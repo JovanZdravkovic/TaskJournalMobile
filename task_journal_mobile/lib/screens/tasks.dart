@@ -8,6 +8,7 @@ import 'package:task_journal_mobile/services/tasks_service.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/drawer.dart';
 import 'package:task_journal_mobile/widgets/label_divider.dart';
+import 'package:task_journal_mobile/widgets/reset_filters_button.dart';
 import 'package:task_journal_mobile/widgets/search_bar.dart';
 import 'package:task_journal_mobile/widgets/task_icon_select.dart';
 import 'package:task_journal_mobile/widgets/task_row.dart';
@@ -62,6 +63,15 @@ class _TasksPageState extends State<TasksPage> {
   }
 
   void setIcon(TaskIconEnum? icon) {}
+
+  void resetFilters() {
+    setState(() {
+      _searchNameController.text = '';
+      searchOrderBy = null;
+      iconSelectController.clearAll();
+      loadTasks();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,17 +139,7 @@ class _TasksPageState extends State<TasksPage> {
                   height: kSmallSpacingBoxSize,
                   width: kSmallSpacingBoxSize,
                 ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _searchNameController.text = '';
-                      searchOrderBy = null;
-                      iconSelectController.clearAll();
-                      loadTasks();
-                    });
-                  }, 
-                  icon: FaIcon(FontAwesomeIcons.arrowsRotate, color: Colors.grey.shade400,),
-                ),
+                ResetFiltersButtonWidget(resetFiltersCallback: resetFilters),
               ],
             ),
             labelDivider('Tasks'),

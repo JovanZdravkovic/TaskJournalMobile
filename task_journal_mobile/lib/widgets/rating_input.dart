@@ -6,22 +6,15 @@ import 'package:task_journal_mobile/utils/theme.dart';
 class RatingInputWidget extends StatefulWidget{
 
   final void Function(int rating) setRatingCallback;
+  final int? rating;
 
-  const RatingInputWidget({super.key, required this.setRatingCallback});
+  const RatingInputWidget({super.key, required this.setRatingCallback, this.rating});
 
   @override
   State<RatingInputWidget> createState() => _RatingInputWidgetState();
 }
 
 class _RatingInputWidgetState extends State<RatingInputWidget> {
-
-  int? rating; 
-
-  void setRating(int value) {
-    setState(() {
-      rating = value;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,56 +27,56 @@ class _RatingInputWidgetState extends State<RatingInputWidget> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              rating != null && rating! >= 1 
+              widget.rating != null && widget.rating! >= 1 
                 ? GestureDetector(
                     child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kSmallIconSize),
                     onTap: () {
-                      setRating(1);
+                      widget.setRatingCallback(1);
                     },
                   )
                 : GestureDetector(
                     child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kSmallIconSize),
                     onTap: () {
-                      setRating(1);
+                      widget.setRatingCallback(1);
                     },
                   ),
               const SizedBox(
                 height: kExtraSmallSpacingBoxSize,
                 width: kExtraSmallSpacingBoxSize,
               ),
-              rating != null && rating! >= 2 
+              widget.rating != null && widget.rating! >= 2 
                 ? GestureDetector(
                     child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kLargeIconSize),
                     onTap: () {
-                      setRating(2);
+                      widget.setRatingCallback(2);
                     },
                   )
                 : GestureDetector(
                     child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kLargeIconSize),
                     onTap: () {
-                      setRating(2);
+                      widget.setRatingCallback(2);
                     },
                   ),
               const SizedBox(
                 height: kExtraSmallSpacingBoxSize,
                 width: kExtraSmallSpacingBoxSize,
               ),
-              rating != null && rating! >= 3 
+              widget.rating != null && widget.rating! >= 3 
                 ? GestureDetector(
                     child: const FaIcon(FontAwesomeIcons.solidStar, color: starYellow, size: kSmallIconSize),
                     onTap: () {
-                      setRating(3);
+                      widget.setRatingCallback(3);
                     },
                   )
                 : GestureDetector(
                     child: const FaIcon(FontAwesomeIcons.star, color: starYellow, size: kSmallIconSize),
                     onTap: () {
-                      setRating(3);
+                      widget.setRatingCallback(3);
                     },
                   ),
             ],
           ),
-          if(rating == null) ...[
+          if(widget.rating == null) ...[
             const SizedBox(
               height: kExtraSmallSpacingBoxSize,
               width: kExtraSmallSpacingBoxSize,

@@ -8,6 +8,7 @@ import 'package:task_journal_mobile/services/tasks_history_service.dart';
 import 'package:task_journal_mobile/widgets/drawer.dart';
 import 'package:task_journal_mobile/widgets/label_divider.dart';
 import 'package:task_journal_mobile/widgets/rating_input.dart';
+import 'package:task_journal_mobile/widgets/reset_filters_button.dart';
 import 'package:task_journal_mobile/widgets/search_bar.dart';
 import 'package:task_journal_mobile/widgets/task_icon_select.dart';
 
@@ -44,6 +45,15 @@ class _TasksHistoryPageState extends State<TasksHistoryPage> {
   void setStarRating(int rating){
     setState(() {
       searchRating = rating;
+    });
+  }
+
+  void resetFilters() {
+    setState(() {
+      searchNameController.text = '';
+      searchRating = null;
+      iconSelectController.clearAll();
+      loadTasksHistory();
     });
   }
 
@@ -88,21 +98,11 @@ class _TasksHistoryPageState extends State<TasksHistoryPage> {
               ),
               Row(
                 children: [
-                  RatingInputWidget(setRatingCallback: setStarRating),
+                  RatingInputWidget(setRatingCallback: setStarRating, rating: searchRating,),
                   const Expanded(
                     child: SizedBox(),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        searchNameController.text = '';
-                        searchRating = null;
-                        iconSelectController.clearAll();
-                        loadTasksHistory();
-                      });
-                    }, 
-                    icon: FaIcon(FontAwesomeIcons.arrowsRotate, color: Colors.grey.shade400,),
-                  ),
+                  ResetFiltersButtonWidget(resetFiltersCallback: resetFilters),
                 ],
               ),
               labelDivider('Tasks History'),
