@@ -100,7 +100,7 @@ class _TasksHistoryPageState extends State<TasksHistoryPage> {
               ),
               Row(
                 children: [
-                  RatingInputWidget(setRatingCallback: setStarRating, rating: searchRating,),
+                  RatingInputWidget(setRatingCallback: setStarRating, rating: searchRating, showPlaceholder: true, showBorder: true,),
                   const Expanded(
                     child: SizedBox(),
                   ),

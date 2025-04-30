@@ -161,6 +161,10 @@ var containerDecoration = BoxDecoration(
   border: Border.all(color: grayDark, width: 2.0),
 );
 
+var borderlessContainerDecoration = const BoxDecoration(
+  borderRadius: BorderRadius.all(Radius.circular(kInputBorderRadius)),
+);
+
 var drawerTheme = const DrawerThemeData(
   backgroundColor: white,
 );

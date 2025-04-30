@@ -7,8 +7,10 @@ class RatingInputWidget extends StatefulWidget{
 
   final void Function(int rating) setRatingCallback;
   final int? rating;
+  final bool showPlaceholder;
+  final bool showBorder;
 
-  const RatingInputWidget({super.key, required this.setRatingCallback, this.rating});
+  const RatingInputWidget({super.key, required this.setRatingCallback, required this.showPlaceholder, required this.showBorder, this.rating,});
 
   @override
   State<RatingInputWidget> createState() => _RatingInputWidgetState();
@@ -20,7 +22,7 @@ class _RatingInputWidgetState extends State<RatingInputWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(kSmallPadding),
-      decoration: containerDecoration,
+      decoration: widget.showBorder ? containerDecoration : borderlessContainerDecoration,
       child: Row(
         children: [
           Row(
@@ -76,7 +78,7 @@ class _RatingInputWidgetState extends State<RatingInputWidget> {
                   ),
             ],
           ),
-          if(widget.rating == null) ...[
+          if(widget.rating == null && widget.showPlaceholder) ...[
             const SizedBox(
               height: kExtraSmallSpacingBoxSize,
               width: kExtraSmallSpacingBoxSize,
