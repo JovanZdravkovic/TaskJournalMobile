@@ -29,6 +29,10 @@ var dangerTextStyle = const TextStyle(
   color: danger,
 );
 
+var hyperlinkTextStyle = const TextStyle(
+  color: Color(0xFF0000EE),
+);
+
 var cardTextStyle = const TextStyle(
   fontSize: kCardFontSize,
 );

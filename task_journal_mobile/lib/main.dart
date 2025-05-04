@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/screens/login.dart';
 import 'package:task_journal_mobile/screens/new_task.dart';
 import 'package:task_journal_mobile/screens/profile.dart';
+import 'package:task_journal_mobile/screens/signup.dart';
 import 'package:task_journal_mobile/screens/task.dart';
 import 'package:task_journal_mobile/screens/tasks.dart';
 import 'package:task_journal_mobile/screens/tasks_history.dart';
@@ -52,6 +53,7 @@ class TaskJournalApp extends StatelessWidget {
         '/profile': (context) => const AuthGuard(child: ProfilePage()),
         '/new_task': (context) => const AuthGuard(child: NewTaskPage()),
         '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignupPage(),
       },
       theme: appTheme,
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_journal_mobile/widgets/drawer.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({ super.key });
@@ -10,6 +11,10 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return const Scaffold(
+      body: Center(
+        child: Text('Sign up page'),
+      ),
+    );
   } 
 }

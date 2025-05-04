@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.vertical(top: Radius.circular(kInputBorderRadius)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(kLargePadding),
+                    padding: const EdgeInsets.all(kStandardPadding),
                     child: Text(
                       'Log in',
                       textAlign: TextAlign.center,
@@ -85,12 +85,13 @@ class _LoginPageState extends State<LoginPage> {
                             autocorrect: false,
                           ),
                         ),
-                        const SizedBox(
-                          height: kSmallSpacingBoxSize,
-                          width: kSmallSpacingBoxSize,
-                        ),
-                        if(_invalidCredentialsError)
+                        if(_invalidCredentialsError) ...[
+                          const SizedBox(
+                            height: kSmallSpacingBoxSize,
+                            width: kSmallSpacingBoxSize,
+                          ),
                           Text('Invalid credentials', style: dangerTextStyle), 
+                        ],
                         const SizedBox(
                           height: kSmallSpacingBoxSize,
                           width: kSmallSpacingBoxSize,
@@ -123,6 +124,26 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ],
                           ),
+                        ),
+                        const SizedBox(
+                          height: kSmallSpacingBoxSize,
+                          width: kSmallSpacingBoxSize,
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text('Don\'t have an account?'),
+                            const SizedBox(
+                              height: kExtraSmallSpacingBoxSize,
+                              width: kExtraSmallSpacingBoxSize,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/signup');
+                              },
+                              child: Text('Sign up', style: hyperlinkTextStyle),
+                            )
+                          ],
                         ),
                       ],
                     ),
