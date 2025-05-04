@@ -81,7 +81,7 @@ class _TasksPageState extends State<TasksPage> {
       ),
       drawer: const NavigationDrawerWidget(),
       body: Padding(
-        padding: const EdgeInsets.all(kSmallPadding),
+        padding: const EdgeInsets.all(kStandardPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

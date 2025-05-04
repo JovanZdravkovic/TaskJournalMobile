@@ -81,7 +81,7 @@ class _TasksHistoryPageState extends State<TasksHistoryPage> {
       drawer: const NavigationDrawerWidget(),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(kSmallPadding),
+          padding: const EdgeInsets.all(kStandardPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

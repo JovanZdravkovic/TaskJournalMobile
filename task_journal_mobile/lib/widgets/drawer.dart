@@ -13,6 +13,10 @@ class NavigationDrawerWidget extends StatelessWidget {
         children: [
           Container(
             color: primary,
+            height: kSpacingBoxSize,
+          ),
+          Container(
+            color: primary,
             child: Padding(
               padding: const EdgeInsets.all(kLargePadding),
               child: Text(
