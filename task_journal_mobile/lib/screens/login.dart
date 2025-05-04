@@ -31,74 +31,101 @@ class _LoginPageState extends State<LoginPage> {
       body: Padding(
         padding: const EdgeInsets.all(kStandardPadding),
         child: Center(
-          child: Form(
-            key: _loginFormKey,
+          child: Container(
+            decoration: containerDecoration,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  width: kMediumInputWidth,
-                  child: TextFormField(
-                    controller: _usernameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Enter username',
+                Container(
+                  width: kLargeInputWidth,
+                  decoration: const BoxDecoration(
+                    color: primary,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(kInputBorderRadius)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(kLargePadding),
+                    child: Text(
+                      'Log in',
+                      textAlign: TextAlign.center,
+                      style: largeHeadingTextStyle,
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: kSmallSpacingBoxSize,
-                  width: kSmallSpacingBoxSize,
-                ),
-                SizedBox(
-                  width: kMediumInputWidth,
-                  child: TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      labelText: 'Enter password',
+                Form(
+                  key: _loginFormKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(kStandardPadding),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: kMediumInputWidth,
+                          child: TextFormField(
+                            controller: _usernameController,
+                            decoration: const InputDecoration(
+                              labelText: 'Enter username',
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: kSmallSpacingBoxSize,
+                          width: kSmallSpacingBoxSize,
+                        ),
+                        SizedBox(
+                          width: kMediumInputWidth,
+                          child: TextFormField(
+                            controller: _passwordController,
+                            decoration: const InputDecoration(
+                              labelText: 'Enter password',
+                            ),
+                            obscureText: true,
+                            enableSuggestions: false,
+                            autocorrect: false,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: kSmallSpacingBoxSize,
+                          width: kSmallSpacingBoxSize,
+                        ),
+                        if(_invalidCredentialsError)
+                          Text('Invalid credentials', style: dangerTextStyle), 
+                        const SizedBox(
+                          height: kSmallSpacingBoxSize,
+                          width: kSmallSpacingBoxSize,
+                        ),
+                        SizedBox(
+                          width: kMediumInputWidth,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    final result = await Provider.of<AuthService>(context, listen: false).login(
+                                      { 
+                                        'username': _usernameController.text, 
+                                        'password': _passwordController.text 
+                                      }
+                                    );
+                                    
+                                    if (!context.mounted) return;
+                                    
+                                    setState(() {
+                                      _invalidCredentialsError = !result;
+                                    });
+                                    if(result) {
+                                      Navigator.pushNamed(context, '/tasks');
+                                    }
+                                  },
+                                  child: const Text('Submit'),
+                                ), 
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                  ),
-                ),
-                const SizedBox(
-                  height: kSmallSpacingBoxSize,
-                  width: kSmallSpacingBoxSize,
-                ),
-                if(_invalidCredentialsError)
-                  Text('Invalid credentials', style: dangerTextStyle), 
-                const SizedBox(
-                  height: kSmallSpacingBoxSize,
-                  width: kSmallSpacingBoxSize,
-                ),
-                SizedBox(
-                  width: kMediumInputWidth,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            final result = await Provider.of<AuthService>(context, listen: false).login(
-                              { 
-                                'username': _usernameController.text, 
-                                'password': _passwordController.text 
-                              }
-                            );
-
-                            if (!context.mounted) return;
-
-                            setState(() {
-                              _invalidCredentialsError = !result;
-                            });
-                            if(result) {
-                              Navigator.pushNamed(context, '/tasks');
-                            }
-                          },
-                          child: const Text('Submit'),
-                        ), 
-                      ),
-                    ],
                   ),
                 ),
               ],

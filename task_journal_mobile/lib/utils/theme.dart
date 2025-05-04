@@ -42,6 +42,11 @@ var navigationDrawerTextStyle = const TextStyle(
   fontSize: kDrawerHeaderFontSize,
 );
 
+var largeHeadingTextStyle = const TextStyle(
+  color: white,
+  fontSize: kLargeHeadingFontSize,
+);
+
 var elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
     foregroundColor: WidgetStateProperty.all(white),
