@@ -5,6 +5,7 @@ import 'package:task_journal_mobile/services/auth_service.dart';
 import 'package:task_journal_mobile/utils/signup_form_validators.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/drawer.dart';
+import 'package:task_journal_mobile/widgets/snackbar.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({ super.key });
@@ -20,6 +21,7 @@ class _SignupPageState extends State<SignupPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _emailController = TextEditingController();
+  String? signupError;
 
   String? confirmPasswordValidator(String? confirmPassword) {
     if(confirmPassword == _passwordController.text) {
@@ -40,8 +42,13 @@ class _SignupPageState extends State<SignupPage> {
       
       if (!context.mounted) return;
       
-      if(result != '') {
+      if(result.containsKey('id')) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.success('Successfully created account'));
         Navigator.pushNamed(context, '/login');
+      } else {
+        setState(() {
+          signupError = result['error']![0].toUpperCase() + result['error']!.substring(1);
+        });
       }
     }
   }
@@ -151,6 +158,13 @@ class _SignupPageState extends State<SignupPage> {
                           height: kSmallSpacingBoxSize,
                           width: kSmallSpacingBoxSize,
                         ),
+                        if(signupError != null) ...[
+                          Text(signupError!, style: dangerTextStyle,),
+                          const SizedBox(
+                            height: kSmallSpacingBoxSize,
+                            width: kSmallSpacingBoxSize,
+                          ),
+                        ],
                         SizedBox(
                           width: kMediumInputWidth,
                           child: Row(

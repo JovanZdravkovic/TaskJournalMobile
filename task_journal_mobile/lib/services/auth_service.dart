@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:task_journal_mobile/services/base_service.dart';
 
 class AuthService {
@@ -24,13 +25,22 @@ class AuthService {
     }
   }
 
-  Future<String> signup(Map<String, dynamic> credentials) async {
+  Future<Map<String, String>> signup(Map<String, dynamic> credentials) async {
     try {
       final response = await baseService.post('signup', credentials);
       final id = response.data['id'];
-      return id;
-    } catch (_) {
-      return '';
+      return {
+        'id': id,
+      };
+    } catch (e) {
+      if(e is DioException && e.response?.data != null) {
+        return {
+          'error': e.response?.data
+        };
+      }
+      return {
+        'error': 'error while signing up',
+      };
     }
   }
 }
