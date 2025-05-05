@@ -23,4 +23,14 @@ class AuthService {
       return false;
     }
   }
+
+  Future<String> signup(Map<String, dynamic> credentials) async {
+    try {
+      final response = await baseService.post('signup', credentials);
+      final id = response.data['id'];
+      return id;
+    } catch (_) {
+      return '';
+    }
+  }
 }

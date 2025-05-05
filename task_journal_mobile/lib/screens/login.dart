@@ -25,6 +25,24 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  void login() async {
+    final result = await Provider.of<AuthService>(context, listen: false).login(
+      { 
+        'username': _usernameController.text, 
+        'password': _passwordController.text 
+      }
+    );
+    
+    if (!context.mounted) return;
+    
+    setState(() {
+      _invalidCredentialsError = !result;
+    });
+    if(result) {
+      Navigator.pushNamed(context, '/tasks');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,23 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () async {
-                                    final result = await Provider.of<AuthService>(context, listen: false).login(
-                                      { 
-                                        'username': _usernameController.text, 
-                                        'password': _passwordController.text 
-                                      }
-                                    );
-                                    
-                                    if (!context.mounted) return;
-                                    
-                                    setState(() {
-                                      _invalidCredentialsError = !result;
-                                    });
-                                    if(result) {
-                                      Navigator.pushNamed(context, '/tasks');
-                                    }
-                                  },
+                                  onPressed: login,
                                   child: const Text('Submit'),
                                 ), 
                               ),
