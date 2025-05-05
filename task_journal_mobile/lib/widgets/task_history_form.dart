@@ -69,7 +69,7 @@ class TaskHistoryFormWidget extends StatelessWidget {
               ),
               SizedBox(
                 child: TextFormField(
-                  maxLines: 10,
+                  maxLines: 8,
                   controller: execCommentController,
                   decoration: const InputDecoration(
                     labelText: 'Enter execution comment',
