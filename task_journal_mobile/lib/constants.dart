@@ -39,3 +39,6 @@ const kTaskCardHeight = 400.0;
 const kInputBorderRadius = 15.0;
 const kChipBorderRadius = 20.0;
 const kCardBorderRadius = 8.0;
+
+const kProfileIconRadius = 50.0;
+const kAlternativeProfileIconSize = 75.0;

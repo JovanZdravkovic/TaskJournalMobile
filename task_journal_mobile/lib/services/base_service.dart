@@ -33,6 +33,17 @@ class BaseService {
     return response;
   }
 
+  Future<Response> getRaw(String url, [Map<String, dynamic>? queryParams]) async {
+    final response = await dio.get(
+      baseUrl + url,
+      queryParameters: queryParams,
+      options: Options(
+        responseType: ResponseType.bytes,
+      ),
+    );
+    return response;
+  }
+
   Future<Response> post(String url, [Map<String, dynamic>? body]) async {
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -67,6 +78,20 @@ class BaseService {
     };
     final response = await dio.delete(
       baseUrl + url,
+      options: Options(
+        headers: headers
+      ),
+    );
+    return response;
+  }
+
+  Future<Response> postMultipart(String url, FormData data) async {
+    final headers = <String, String>{
+      'Content-Type': 'multipart/form-data;',
+    };
+    final response = await dio.post(
+      baseUrl + url,
+      data: data,
       options: Options(
         headers: headers
       ),

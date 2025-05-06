@@ -12,6 +12,7 @@ import 'package:task_journal_mobile/services/auth_service.dart';
 import 'package:task_journal_mobile/services/base_service.dart';
 import 'package:task_journal_mobile/services/tasks_history_service.dart';
 import 'package:task_journal_mobile/services/tasks_service.dart';
+import 'package:task_journal_mobile/services/user_service.dart';
 import 'package:task_journal_mobile/utils/auth_guard.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 
@@ -31,6 +32,9 @@ void main() {
         ),
         ProxyProvider<BaseService, TasksHistoryService>(
           update: (context, baseService, previous) => TasksHistoryService(baseService: baseService),
+        ),
+        ProxyProvider<BaseService, UserService>(
+          update: (context, baseService, previous) => UserService(baseService: baseService),
         ),
       ],
       child: const TaskJournalApp(),
