@@ -25,6 +25,15 @@ class AuthService {
     }
   }
 
+  Future<bool> logout() async {
+    try {
+      final response = await baseService.post('logout');
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<Map<String, String>> signup(Map<String, dynamic> credentials) async {
     try {
       final response = await baseService.post('signup', credentials);

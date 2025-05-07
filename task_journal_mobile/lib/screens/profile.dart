@@ -7,9 +7,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_journal_mobile/constants.dart';
 import 'package:task_journal_mobile/models/user.dart';
+import 'package:task_journal_mobile/services/auth_service.dart';
 import 'package:task_journal_mobile/services/user_service.dart';
 import 'package:task_journal_mobile/utils/theme.dart';
 import 'package:task_journal_mobile/widgets/drawer.dart';
+import 'package:task_journal_mobile/widgets/snackbar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({ super.key });
@@ -23,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String pickedFile = 'Pick a file';
   Uint8List? imageBytes;
   User? user;
+  bool editMode = false;
 
   Future<void> openFilePicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.any);
@@ -30,6 +33,51 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         pickedFile = result.files.first.name;
       });
+    }
+  }
+
+  void toggleEditMode() {
+    setState(() {
+      editMode = !editMode;
+    });
+  }
+
+  void logout() async {
+
+    var confirm = await showDialog<bool>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if(confirm == null || confirm == false) return;
+
+    final result = await Provider.of<AuthService>(context, listen: false).logout();
+    
+    if(!context.mounted) return;
+
+    if(result) {
+      Navigator.pushNamedAndRemoveUntil( 
+        context,
+        '/login',
+        (Route<dynamic> route) => false,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBarWidget.error('Error logging out'));
     }
   }
 
@@ -111,21 +159,36 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: kMediumInputWidth,
                     child: Text('Joined at: ${DateFormat('dd. MMM yyyy').format(user!.createdAt)}', style: cardTextStyle),
                   ),
+                  const SizedBox(
+                    height: kExtraSmallSpacingBoxSize,
+                    width: kExtraSmallSpacingBoxSize,
+                  ),
+                  SizedBox(
+                    width: kMediumInputWidth,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: toggleEditMode, 
+                            child: const Text('Edit'),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: kSmallSpacingBoxSize,
+                          width: kSmallSpacingBoxSize,
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: logout, 
+                            child: const Text('Log out'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ),
-        ),
-        floatingActionButton: SizedBox(
-          height: kFloatingActionButtonSize,
-          width: kFloatingActionButtonSize,
-          child: FittedBox(
-            child: FloatingActionButton(
-              onPressed: () {},
-              heroTag: null,
-              shape: const CircleBorder(),
-              backgroundColor: dark,
-              child: const FaIcon(FontAwesomeIcons.pencil, color: white, size: kLargeIconSize,),
             ),
           ),
         ),
