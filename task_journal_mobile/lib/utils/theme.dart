@@ -62,6 +62,15 @@ var elevatedButtonTheme = ElevatedButtonThemeData(
   ),
 );
 
+var elevatedButtonDangerStyle = ButtonStyle(
+  foregroundColor: WidgetStateProperty.all(white),
+  backgroundColor: WidgetStateProperty.all(danger),
+  textStyle: WidgetStateProperty.all(const TextStyle(
+    fontSize: 16.0,
+    color: white,
+  )),
+);
+
 var switchTheme = SwitchThemeData(
   overlayColor: WidgetStateProperty.all(primary),
 );

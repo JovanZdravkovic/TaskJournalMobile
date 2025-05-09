@@ -58,6 +58,20 @@ class BaseService {
     return response;
   }
 
+  Future<Response> postMultipart(String url, FormData data) async {
+    final headers = <String, String>{
+      'Content-Type': 'multipart/form-data;',
+    };
+    final response = await dio.post(
+      baseUrl + url,
+      data: data,
+      options: Options(
+        headers: headers
+      ),
+    );
+    return response;
+  }
+
   Future<Response> put(String url, [Map<String, dynamic>? body]) async {
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -78,20 +92,6 @@ class BaseService {
     };
     final response = await dio.delete(
       baseUrl + url,
-      options: Options(
-        headers: headers
-      ),
-    );
-    return response;
-  }
-
-  Future<Response> postMultipart(String url, FormData data) async {
-    final headers = <String, String>{
-      'Content-Type': 'multipart/form-data;',
-    };
-    final response = await dio.post(
-      baseUrl + url,
-      data: data,
       options: Options(
         headers: headers
       ),
