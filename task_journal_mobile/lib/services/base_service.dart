@@ -9,7 +9,11 @@ class BaseService {
 
   final Dio dio;
   late CookieJar cookieJar;
+<<<<<<< Updated upstream
   static const String baseUrl = 'https://taskjournal.online/api/';
+=======
+  static const String baseUrl = 'http://192.168.88.132:8080/';
+>>>>>>> Stashed changes
 
   BaseService({ required this.dio }) {
     init();
