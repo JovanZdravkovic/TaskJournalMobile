@@ -1,4 +1,4 @@
-# What is Task Journal?
+# Task Journal
 
 **Task Journal** is a cross-platform personal task management app designed to help users organize, prioritize, and track their daily activities.  
 The app is available on the web at [taskjournal.online](https://taskjournal.online), as well as on mobile devices running Android and iOS.
